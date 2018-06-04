@@ -1,16 +1,17 @@
 #pragma once
 
-#include <list>
-#include <stack>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/dynamic_bitset.hpp>
+#include <unordered_set>
 
 using namespace std;
 
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS> graph_t;
 
 /*
-*	This class defines a directed graph
+*	Decorator class for a directed graph implemented with the boost library.
+*	The purpose of this class is to make easier the operations usually perfomed a graph
+*	(add a vertex, get children of a vertex etc...)
 */
 class Graph {
 private:
@@ -24,9 +25,9 @@ public:
 	/*
 	*	Returns the adjacent vertices of a specific vertex
 	*/
-	set<int> getChildren(int node);
+	std::unordered_set<int> getChildren(int node);
 
 	graph_t getGraph();
 	int getSize();
-	void toString();
+	string toString();
 };

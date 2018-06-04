@@ -1,4 +1,5 @@
 #include "BenchmarkManager.h"
+#include <sstream>
 
 void BenchmarkManager::addResult(BenchmarkResult result) {
 	this->results.push_back(result);
@@ -23,4 +24,13 @@ double BenchmarkManager::getAverageDiffTime() {
 
 void BenchmarkManager::clear() {
 	this->results.clear();
+}
+
+string BenchmarkManager::toString() {
+	stringstream s;
+	s << "Success rate:= " << this->getSuccessRate() << "%"
+		<< " ; "
+		<< "average diff time = " << this->getAverageDiffTime();
+
+	return s.str();
 }

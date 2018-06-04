@@ -33,6 +33,12 @@
     <ClCompile Include="SCCStrategy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SCCList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StronglyConnectedComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test.h">
@@ -48,6 +54,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SCCStrategy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SCCList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StronglyConnectedComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

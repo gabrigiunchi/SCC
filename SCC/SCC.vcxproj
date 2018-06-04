@@ -118,14 +118,18 @@
     <ClCompile Include="BenchmarkManager.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SCCList.cpp" />
     <ClCompile Include="SCCStrategy.cpp" />
+    <ClCompile Include="StronglyConnectedComponent.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BenchmarkManager.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="SCCList.h" />
     <ClInclude Include="SCCStrategy.h" />
+    <ClInclude Include="StronglyConnectedComponent.h" />
     <ClInclude Include="test.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

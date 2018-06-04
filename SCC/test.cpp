@@ -10,26 +10,30 @@ BenchmarkResult testAlgorithm(Graph* g) {
 	clock_t start1;
 	double duration1;
 	start1 = clock();
-	auto v1 = SCCTarjan(g);
+	SCCList v1 = SCCTarjan(g);
 	duration1 = (clock() - start1) / (double)CLOCKS_PER_SEC;
-
+	
 	// Calculate time with boost's algorithm
 	clock_t start2;
 	double duration2;
 	start2 = clock();
-	auto v2 = SCCBoost(g);
+	int nComponents = 0;
+	vector<int> v2 = SCCBoost(g, &nComponents);
 	duration2 = (clock() - start2) / (double)CLOCKS_PER_SEC;
+	SCCList l2 = convert(v2, nComponents);
 
 	BenchmarkResult result;
-	result.success = equals(v1, v2);
-	result.diffTime = duration2 - duration1;
+	result.graphSize = g->getSize();
+	result.success = v1.equals(l2);
+	result.boostAlgorithmTime = duration2;
+	result.customAlgorithmTime = duration1;
+	result.diffTime = duration1 - duration2;
 
-	delete v1;
-	delete v2;
 	return result;
 }
 
-void performTest(int testCases, int size, BenchmarkManager* benchmark) {
+BenchmarkManager* performTest(int testCases, int size) {
+	BenchmarkManager* benchmark = new BenchmarkManager();
 	int successCount = 0;
 
 	for (int i = 0; i < testCases; i++) {
@@ -39,26 +43,20 @@ void performTest(int testCases, int size, BenchmarkManager* benchmark) {
 		benchmark->addResult(result);
 		delete g;
 	}
+
+	return benchmark;
 }
 
 void randomTest() {
 	int testCases = 10; // number of tests performed for each graph size
 	int maxSize = 10000;
-	BenchmarkManager* benchmark = new BenchmarkManager();
-
+	
 	// Performs the test with incrementally graph size
 	for (int i = 1; i <= maxSize; i++) {
-		performTest(testCases, i, benchmark);
-		cout << "(size = " << i << "): "
-			<< " Success rate:= " << benchmark->getSuccessRate() << "%"
-			<< " ; "
-			<< "average diff time = " << benchmark->getAverageDiffTime() 
-			<< endl;
-
-		benchmark->clear();
+		BenchmarkManager* benchmark = performTest(testCases, i);
+		cout << "(size = " << i << "): " << benchmark->toString() << endl;
+		delete benchmark;
 	}
-
-	delete benchmark;
 }
 
 void test1() {
@@ -70,18 +68,15 @@ void test1() {
 	g->addEdge(3, 4);
 	auto v1 = SCCTarjan(g);
 
-	int successCount = 0;
-	successCount += contains(v1->at(0), 4);
-	successCount += contains(v1->at(1), 3);
-	successCount += contains(v1->at(2), 1);
-	successCount += contains(v1->at(2), 2);
-	successCount += contains(v1->at(2), 0);
-	cout << "test1: " << successCount << "/5" << endl;
+	int nComponents = 0;
+	auto v2 = SCCBoost(g, &nComponents);
 
-	delete v1;
+	cout << v1.toString();
+	cout << endl << endl << convert(v2, nComponents).toString();
+
 	delete g;
 }
-
+/*
 void test2() {
 	Graph* g = new Graph(4);
 	g->addEdge(0, 1);
@@ -186,16 +181,16 @@ void test5() {
 	delete v1;
 	delete g;
 }
-
+*/
 void customTest() {
 	test1();
-	test2();
+	/*test2();
 	test3();
 	test4();
-	test5();
+	test5();*/
 }
 
 
 void memoryTest() {
-	performTest(1000000000, 100, new BenchmarkManager());
+	performTest(1000000000, 100);
 }

@@ -19,7 +19,7 @@ BenchmarkResult testAlgorithm(Graph* g);
 * Executes n test cases and returns the number of successfull tests.
 * Every test is performed with a randomly generated graph whose size is the parameter <size>
 */
-void performTest(int testCases, int size, BenchmarkManager* benchmark);
+BenchmarkManager* performTest(int testCases, int size);
 
 // Performs multiple tests with random graphs and different graph size
 void randomTest();

@@ -5,7 +5,10 @@
 using namespace std;
 
 struct BenchmarkResult {
+	int graphSize;
 	bool success;
+	double customAlgorithmTime;
+	double boostAlgorithmTime;
 	double diffTime; // Time difference between custom algorithm and boost's algorithm
 };
 
@@ -22,4 +25,5 @@ public:
 	double getSuccessRate();
 	double getAverageDiffTime();
 	void clear(); // eliminate the past results
+	string toString();
 };
