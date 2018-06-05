@@ -8,7 +8,7 @@ void BenchmarkManager::addResult(BenchmarkResult result) {
 double BenchmarkManager::getSuccessRate() {
 	int successCount = 0;
 	for (auto it = this->results.begin(); it != this->results.end(); ++it) {
-		successCount += (*it).success;
+		successCount += (*it).isSuccessfull();
 	}
 	return ((double)successCount / (double)this->results.size()) * (double)100;
 }
@@ -16,7 +16,7 @@ double BenchmarkManager::getSuccessRate() {
 double BenchmarkManager::getAverageDiffTime() {
 	double total = 0;
 	for (auto it = this->results.begin(); it != this->results.end(); ++it) {
-		total += (*it).diffTime;
+		total += (*it).getDiffTime();
 	}
 
 	return total / (double)this->results.size();
@@ -28,9 +28,9 @@ void BenchmarkManager::clear() {
 
 string BenchmarkManager::toString() {
 	stringstream s;
-	s << "Success rate:= " << this->getSuccessRate() << "%"
-		<< " ; "
-		<< "average diff time = " << this->getAverageDiffTime();
+	s << "{ Success rate: " << this->getSuccessRate() << "%"
+		<< ", average diff time: " << this->getAverageDiffTime()
+		<< " }";
 
 	return s.str();
 }

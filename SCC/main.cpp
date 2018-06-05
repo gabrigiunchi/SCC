@@ -1,54 +1,59 @@
 #include <iostream>
 #include <time.h> 
-#include "test.h"
-#include <unordered_set>
-#include "utils.h"
-#include "StronglyConnectedComponent.h"
-#include "SCCList.h"
+#include "Tester.h"
+#include "SCCTarjan.h"
+#include "SCCNuutila.h"
+#include "SCCPearce.h"
 
 using namespace std;
 
-StronglyConnectedComponent generate(int a, int b, int c) {
-	StronglyConnectedComponent co;
-	
-	co.addNode(a);
-	co.addNode(b);
-	co.addNode(c);
+void menu() {
+	string input;
+	int n = 10;
+	int minSize = 10;
 
-	return co;
-}
+	do {
+		cout << endl << " 1) Test Tarjan algorithm" << endl
+			<< " 2) Test Pearce algorithm" << endl
+			<< " 3) Test Nuutila algorithm" << endl
+			<< " 4) Test all algorithms" << endl
+			<< " 5) Memory test" << endl
+			<< endl << " > ";
 
-void foo() {
-	SCCList* l1 = new SCCList();
-	SCCList* l2 = new SCCList();
+		cin >> input;
 
-	l1->addComponent(generate(1, 2, 3));
-	l1->addComponent(generate(4, 5, 6));
-	l1->addComponent(generate(7, 8, 9));
+		if (input == "1") {
+			cout << endl;
+			cout << Tester(new SCCTarjan()).performeTests(n, minSize).toString() << endl;
+		}
+		else if (input == "2") {
+			cout << endl;
+			cout << Tester(new SCCPearce()).performeTests(n, minSize).toString() << endl;
+		}
+		else if (input == "3") {
+			cout << endl;
+			cout << Tester(new SCCNuutila()).performeTests(n, minSize).toString() << endl;
+		}
+		else if (input == "4") {
+			cout << endl;
+			cout << Tester(new SCCTarjan()).performeTests(n, minSize).toString() << endl;
+			cout << endl;
+			cout << Tester(new SCCPearce()).performeTests(n, minSize).toString() << endl;
+			cout << endl;
+			cout << Tester(new SCCNuutila()).performeTests(n, minSize).toString() << endl;
+		}
+		else if (input == "5") {
+			Tester(new SCCTarjan()).memoryTest();
+		}
 
-	unordered_set<int> s;
-	s.insert(8);
-	s.insert(7);
-	l2->addComponent(StronglyConnectedComponent(s));
-	l2->addComponent(generate(1, 3, 2));
-	l2->addComponent(generate(4, 5, 6));
-
-	cout << l1->equals(*l2);
+	} while (input != "exit" && input != "quit");
 }
 
 int main() {
 	// Inizialize seed for the random fuction
 	srand(time(NULL));
 
-	//customTest();
-	//randomTest();
-	//memoryTest();
+	menu();
 
-	//foo();
-
-	cout << performTest(1, 100000)->toString();
-
-	cout << endl << endl;
-	system("pause");
 	return 0;
 }

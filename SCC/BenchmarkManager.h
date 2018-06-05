@@ -1,16 +1,9 @@
 #pragma once
 
 #include <list>
+#include "BenchmarkResult.h"
 
 using namespace std;
-
-struct BenchmarkResult {
-	int graphSize;
-	bool success;
-	double customAlgorithmTime;
-	double boostAlgorithmTime;
-	double diffTime; // Time difference between custom algorithm and boost's algorithm
-};
 
 /*
 *	Class which stores the results of different tests and provides information about the performance of the algorithm used,

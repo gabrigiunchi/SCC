@@ -116,21 +116,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BenchmarkManager.cpp" />
+    <ClCompile Include="BenchmarkResult.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SCCList.cpp" />
+    <ClCompile Include="SCCNuutila.cpp" />
+    <ClCompile Include="SCCPearce.cpp" />
     <ClCompile Include="SCCStrategy.cpp" />
+    <ClCompile Include="SCCTarjan.cpp" />
     <ClCompile Include="StronglyConnectedComponent.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="Tester.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BenchmarkManager.h" />
+    <ClInclude Include="BenchmarkResult.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SCCList.h" />
+    <ClInclude Include="SCCNuutila.h" />
+    <ClInclude Include="SCCPearce.h" />
     <ClInclude Include="SCCStrategy.h" />
+    <ClInclude Include="SCCTarjan.h" />
     <ClInclude Include="StronglyConnectedComponent.h" />
-    <ClInclude Include="test.h" />
+    <ClInclude Include="Tester.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
