@@ -7,13 +7,27 @@
 
 using namespace std;
 
+void getInput(int* n, int *minSize, int* step) {
+	cout << endl << " Do you want to customize the test parameters? (y/n) " << endl << " > ";
+	string input;
+	cin >> input;
+
+	if (input == "y") {
+		cout << " Insert <number of tests> <start graph size> <increment>" << endl << " > ";
+		cin >> *n >> *minSize >> *step;
+	}
+
+	cout << endl;
+}
+
 void menu() {
 	string input;
-	int n = 10000;
-	int minSize = 1000;
-	int step = 100;
-
+	
 	do {
+		int n = 100;
+		int minSize = 1;
+		int step = 1;
+
 		cout << endl << " 1) Test Tarjan algorithm" << endl
 			<< " 2) Test Nuutila algorithm" << endl
 			<< " 3) Test Pearce algorithm" << endl
@@ -24,18 +38,19 @@ void menu() {
 		cin >> input;
 
 		if (input == "1") {
-			cout << endl;
+			getInput(&n, &minSize, &step);
 			cout << Tester(new SCCTarjan()).performeTests(n, minSize, step).toString() << endl;
 		}
 		else if (input == "2") {
-			cout << endl;
+			getInput(&n, &minSize, &step);
 			cout << Tester(new SCCNuutila()).performeTests(n, minSize, step).toString() << endl;
 		}
 		else if (input == "3") {
-			cout << endl;
+			getInput(&n, &minSize, &step);
 			cout << Tester(new SCCPearce()).performeTests(n, minSize, step).toString() << endl;
 		}
 		else if (input == "4") {
+			getInput(&n, &minSize, &step);
 			BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step);
 			BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step);
 			BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step);
@@ -44,7 +59,8 @@ void menu() {
 				<< resultPearce.toString() << endl;
 		}
 		else if (input == "5") {
-			Tester(new SCCTarjan()).memoryTest();
+			cout << endl;
+			Tester(new SCCNuutila()).memoryTest();
 		}
 
 	} while (input != "exit" && input != "quit");
@@ -56,6 +72,7 @@ int main() {
 	srand(time(NULL));
 
 	menu();
-	
+
+	system("pause");
 	return 0;
 }

@@ -55,6 +55,10 @@ void SCCNuutila::SCCNuutilaUtil(Graph* g, int parent, int disc[], int low[], sta
 }
 
 SCCList SCCNuutila::getSCC(Graph* g) {
+	if (g->getSize() <= 0) {
+		return SCCList();
+	}
+
 	int *disc = new int[g->getSize()];
 	int *low = new int[g->getSize()];
 	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());

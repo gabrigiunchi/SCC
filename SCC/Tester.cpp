@@ -45,24 +45,14 @@ BenchmarkManager Tester::performeTests(int n, int minSize) {
 	return this->performeTests(n, minSize, 1);
 }
 
-/*void Tester::randomTests() {
-	int testCases = 10; // number of tests performed for each graph size
-	int maxSize = 10000;
-
-	// Performs the test with incrementally graph size
-	for (int i = 1; i <= maxSize; i++) {
-		BenchmarkManager benchmark = this->performeTests(testCases, i);
-		cout << "(size = " << i << "): " << benchmark.toString() << endl;
-	}
-}*/
-
 void Tester::memoryTest() {
 	int n = 1000000;
 	int size = 100;
 
-	for (int i = 0; i < n; i++) {
-		Graph* g = generateGraph(100);
+	for (int i = 1; i <= n; i++) {
+		Graph* g = generateGraph(size);
 		this->checkAlgorithmCorrectness(g);
+		cout << "test " << i << endl;
 		delete g;
 	}
 }

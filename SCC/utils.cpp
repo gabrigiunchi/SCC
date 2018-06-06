@@ -7,6 +7,10 @@ int random(int limit) {
 }
 
 Graph* generateGraph(int size) {
+	if (size <= 0) {
+		return new Graph(0);
+	}
+
 	Graph* g = new Graph(size);
 	int nEdges = random(size * 2);
 	for (int i = 0; i < nEdges; i++) {

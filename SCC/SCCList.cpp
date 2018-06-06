@@ -10,6 +10,10 @@ void SCCList::addComponent(StronglyConnectedComponent component) {
 }
 
 bool SCCList::equals(SCCList other) {
+	if (this->components.size() == 0 && other.getComponents().size() == 0) {
+		return true;
+	}
+
 	if (this->components.size() != other.getComponents().size()) {
 		return false;
 	}

@@ -40,9 +40,9 @@ string BenchmarkResult::toString() {
 	s << "{ algorithm: " << this->algorithm
 		<< ", graph size: " << this->graphSize
 		<< ", success: " << (this->success ? "true" : "false")
-		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime
+		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime << "s"
 		<< ", Boost time: " << this->boostAlgorithmTime
-		<< ", difference: " << this->diffTime
+		<< ", difference: " << this->diffTime << "s"
 		<< " }";
 
 	return s.str();
