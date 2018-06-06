@@ -29,7 +29,7 @@ void BenchmarkManager::clear() {
 string BenchmarkManager::toString() {
 	stringstream s;
 	s << "{ Success rate: " << this->getSuccessRate() << "%"
-		<< ", average diff time: " << this->getAverageDiffTime()
+		<< ", average difference: " << this->getAverageDiffTime()
 		<< " }";
 
 	return s.str();
