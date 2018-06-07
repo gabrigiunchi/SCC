@@ -18,5 +18,6 @@ public:
 	unordered_set<int> getNodes();
 	bool equals(StronglyConnectedComponent other);
 	string toString();
+	int size();
 };
 

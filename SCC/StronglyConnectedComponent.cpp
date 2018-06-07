@@ -38,3 +38,7 @@ string StronglyConnectedComponent::toString() {
 
 	return s.str();
 }
+
+int StronglyConnectedComponent::size() {
+	return this->nodes.size();
+}

@@ -132,7 +132,6 @@
     <ClInclude Include="BenchmarkManager.h" />
     <ClInclude Include="BenchmarkResult.h" />
     <ClInclude Include="Graph.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SCCList.h" />
     <ClInclude Include="SCCNuutila.h" />
     <ClInclude Include="SCCPearce.h" />

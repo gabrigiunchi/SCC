@@ -12,7 +12,7 @@ Graph* generateGraph(int size) {
 	}
 
 	Graph* g = new Graph(size);
-	int nEdges = random(size * 2);
+	int nEdges = size + random(size);
 	for (int i = 0; i < nEdges; i++) {
 		int source = random(size);
 		int destination = random(size);

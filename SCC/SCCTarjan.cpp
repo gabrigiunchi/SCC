@@ -6,6 +6,7 @@ SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 
 void SCCTarjan::SCCTarjanUtil(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
+	
 	static int time = 0;
 
 	disc[parent] = time;

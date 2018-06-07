@@ -6,6 +6,10 @@ Tester::Tester(SCCStrategy* strategy) {
 	this->strategy = strategy;
 }
 
+Tester::~Tester() {
+	delete this->strategy;
+}
+
 BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	// Calculate time with custom algorithm
 	clock_t start1;
@@ -49,13 +53,5 @@ BenchmarkManager Tester::performeTests(int n, int minSize) {
 }
 
 void Tester::memoryTest() {
-	int n = 1000000;
-	int size = 100;
-
-	for (int i = 1; i <= n; i++) {
-		Graph* g = generateGraph(size);
-		this->checkAlgorithmCorrectness(g);
-		cout << "test " << i << endl;
-		delete g;
-	}
+	this->performeTests(100, 1000, 0);
 }

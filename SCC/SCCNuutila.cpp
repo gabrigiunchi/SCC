@@ -36,7 +36,7 @@ void SCCNuutila::SCCNuutilaUtil(Graph* g, int parent, int disc[], int low[], sta
 	if (low[parent] == disc[parent]) {
 		// Collect the node which are in the strong component
 		StronglyConnectedComponent group;
-		while (stack->empty() == false && disc[stack->top()] > disc[parent]) {
+		while (!stack->empty() && disc[stack->top()] > disc[parent]) {
 			int node = stack->top();
 			group.addNode(node);
 			stackMember->set(node, false);
@@ -63,7 +63,7 @@ SCCList SCCNuutila::getSCC(Graph* g) {
 	int *low = new int[g->getSize()];
 	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
 	stack<int> *stack = new std::stack<int>();
-	SCCList* strongComponents = new SCCList();
+	SCCList strongComponents;
 
 	// Initialize disc and low (stackMember is already initialized)
 	for (int i = 0; i < g->getSize(); i++) {
@@ -74,7 +74,7 @@ SCCList SCCNuutila::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			SCCNuutilaUtil(g, i, disc, low, stack, stackMember, strongComponents);
+			SCCNuutilaUtil(g, i, disc, low, stack, stackMember, &strongComponents);
 		}
 	}
 
@@ -84,5 +84,5 @@ SCCList SCCNuutila::getSCC(Graph* g) {
 	delete stackMember;
 	delete stack;
 
-	return *strongComponents;
+	return strongComponents;
 }
