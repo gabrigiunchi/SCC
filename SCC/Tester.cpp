@@ -30,12 +30,15 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 BenchmarkManager Tester::performeTests(int n, int minSize, int step) {
 	BenchmarkManager benchmark;
 
-	for (int i = minSize; i <= n + minSize; i+=step) {
-		Graph* g = generateGraph(i);
+	int size = minSize;
+	for (int i = 0; i < n; i++) {
+		Graph* g = generateGraph(size);
 		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
 		cout << result.toString() << endl;
+		flush(cout);
 		benchmark.addResult(result);
 		delete g;
+		size += step;
 	}
 
 	return benchmark;

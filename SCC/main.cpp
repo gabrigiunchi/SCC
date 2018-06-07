@@ -4,6 +4,7 @@
 #include "SCCTarjan.h"
 #include "SCCNuutila.h"
 #include "SCCPearce.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -25,8 +26,8 @@ void menu() {
 	
 	do {
 		int n = 100;
-		int minSize = 1;
-		int step = 1;
+		int minSize = 1000;
+		int step = 0;
 
 		cout << endl << " 1) Test Tarjan algorithm" << endl
 			<< " 2) Test Nuutila algorithm" << endl
@@ -66,13 +67,11 @@ void menu() {
 	} while (input != "exit" && input != "quit");
 }
 
-
 int main() {
 	// Inizialize seed for the random fuction
 	srand(time(NULL));
 
 	menu();
 
-	system("pause");
 	return 0;
 }
