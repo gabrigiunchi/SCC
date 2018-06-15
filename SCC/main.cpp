@@ -25,9 +25,10 @@ void menu() {
 	string input;
 	
 	do {
-		int n = 10;
-		int minSize = 10000;
-		int step = 0;
+		int minSize = 10;
+		int step = 10;
+		int maxSize = 1000;
+		int n = (maxSize - minSize) / step + 1;
 
 		cout << endl << " 1) Test Tarjan algorithm" << endl
 			<< " 2) Test Nuutila algorithm" << endl
@@ -58,10 +59,10 @@ void menu() {
 			//getInput(&n, &minSize, &step);
 			BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step);
 			BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step);
-			//BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step);
-			cout << resultTarjan.toString() << endl
-				<< resultNuutila.toString() << endl;
-				//<< resultPearce.toString() << endl;
+			BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step);
+			cout << " Tarjan: " << resultTarjan.toString() << endl
+				<< " Nuutila: " << resultNuutila.toString() << endl
+				<< resultPearce.toString() << endl;
 		}
 		else if (input == "5") {
 			cout << endl;
@@ -76,7 +77,6 @@ int main() {
 	srand(time(NULL));
 
 	menu();
-
-	system("pause");
+	
 	return 0;
 }
