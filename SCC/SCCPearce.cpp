@@ -2,7 +2,7 @@
 
 SCCPearce::SCCPearce() :SCCStrategy("Pearce") { }
 
-void SCCPearce::SCCPearceUtil(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent,
+void SCCPearce::visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent,
 	boost::dynamic_bitset<>* visited, SCCList* strongComponents) {
 
 	static int index = 0;
@@ -16,7 +16,7 @@ void SCCPearce::SCCPearceUtil(Graph* g, int v, int rindex[], stack<int>* stack, 
 	for (auto it = children.begin(); it != children.end(); ++it) {
 		int w = *it;
 		if (!(*visited)[w]) {
-			this->SCCPearceUtil(g, w, rindex, stack, inComponent, visited, strongComponents);
+			this->visit(g, w, rindex, stack, inComponent, visited, strongComponents);
 		}
 
 		if (!(*inComponent)[w] && rindex[w] < rindex[v]) {
@@ -55,7 +55,7 @@ SCCList SCCPearce::getSCC(Graph* g) {
 
 	for (int i = 0; i < g->getSize(); i++) {
 		if (!(*visited)[i]) {
-			this->SCCPearceUtil(g, i, rindex, stack, inComponent, visited, &strongComponents);
+			this->visit(g, i, rindex, stack, inComponent, visited, &strongComponents);
 		}
 	}
 

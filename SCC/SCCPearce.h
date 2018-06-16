@@ -3,7 +3,7 @@
 
 class SCCPearce : public SCCStrategy {
 private:
-	void SCCPearceUtil(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent, 
+	void visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent, 
 		boost::dynamic_bitset<>* visited, SCCList* strongComponents);
 public:
 	SCCPearce();

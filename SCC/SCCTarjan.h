@@ -3,8 +3,8 @@
 
 class SCCTarjan : public SCCStrategy {
 private:
-	void SCCTarjanUtil(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
-		SCCList* strongComponents);
+	void visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, 
+		boost::dynamic_bitset<>* stackMember, SCCList* strongComponents);
 
 public:
 	SCCTarjan();

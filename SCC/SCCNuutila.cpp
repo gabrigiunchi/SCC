@@ -4,7 +4,7 @@
 
 SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 
-void SCCNuutila::SCCNuutilaUtil(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
+void SCCNuutila::visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
 	static int time = 0;
 
@@ -20,7 +20,7 @@ void SCCNuutila::SCCNuutilaUtil(Graph* g, int parent, int disc[], int low[], sta
 
 		// If the node hasn't been visited yet we continue the dfs
 		if (disc[child] == NIL) {
-			SCCNuutilaUtil(g, child, disc, low, stack, stackMember, strongComponents);
+			visit(g, child, disc, low, stack, stackMember, strongComponents);
 
 			// Call back from dfs (when it backtracks)
 			low[parent] = min(low[parent], low[child]);
@@ -74,7 +74,7 @@ SCCList SCCNuutila::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			SCCNuutilaUtil(g, i, disc, low, stack, stackMember, &strongComponents);
+			visit(g, i, disc, low, stack, stackMember, &strongComponents);
 		}
 	}
 

@@ -4,7 +4,7 @@
 
 SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 
-void SCCTarjan::SCCTarjanUtil(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
+void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
 	
 	static int time = 0;
@@ -22,7 +22,7 @@ void SCCTarjan::SCCTarjanUtil(Graph* g, int parent, int disc[], int low[], stack
 
 		// If the node hasn't been visited yet we continue the dfs
 		if (disc[child] == -1) {
-			SCCTarjanUtil(g, child, disc, low, stack, stackMember, strongComponents);
+			visit(g, child, disc, low, stack, stackMember, strongComponents);
 
 			// Call back from dfs (when it backtracks)
 			low[parent] = min(low[parent], low[child]);
@@ -77,7 +77,7 @@ SCCList SCCTarjan::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			SCCTarjanUtil(g, i, disc, low, stack, stackMember, &strongComponents);
+			visit(g, i, disc, low, stack, stackMember, &strongComponents);
 		}
 	}
 
