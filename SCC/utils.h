@@ -11,9 +11,9 @@ using namespace std;
 int random(int limit);
 
 /*
-*	Generate a random graph with the given size
+*	Generates a random graph with the given size
 */
 Graph* generateGraph(int size);
 
-
+// Takes as input the result of the boost's function for calculating SCCs and converts it into a istance of SCCList
 SCCList convert(vector<int> v, int nComponents);
