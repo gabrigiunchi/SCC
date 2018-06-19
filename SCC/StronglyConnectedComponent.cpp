@@ -3,7 +3,7 @@
 
 StronglyConnectedComponent::StronglyConnectedComponent() {}
 
-StronglyConnectedComponent::StronglyConnectedComponent(unordered_set<int> set) {
+StronglyConnectedComponent::StronglyConnectedComponent(set<int> set) {
 	for (auto it = set.begin(); it != set.end(); ++it) {
 		this->addNode(*it);
 	}
@@ -13,7 +13,7 @@ void StronglyConnectedComponent::addNode(int node) {
 	this->nodes.insert(node);
 }
 
-unordered_set<int> StronglyConnectedComponent::getNodes() {
+set<int> StronglyConnectedComponent::getNodes() {
 	return this->nodes;
 }
 

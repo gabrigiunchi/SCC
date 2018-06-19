@@ -1,7 +1,6 @@
 #include "utils.h"
 #include <iostream>
 
-
 int random(int limit) {
 	return rand() % limit;
 }
@@ -25,7 +24,7 @@ Graph* generateGraph(int size) {
 }
 
 SCCList convert(vector<int> v, int nComponents) {
-	vector<unordered_set<int>> groups(nComponents);
+	vector<set<int>> groups(nComponents);
 
 	for (int current = 0; current < v.size(); current++) {
 		int component = v[current];

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "StronglyConnectedComponent.h"
 
 using namespace std;
@@ -10,12 +10,12 @@ using namespace std;
 */
 class SCCList {
 private:
-	list<StronglyConnectedComponent> components;
+	vector<StronglyConnectedComponent> components;
 
 public:
 	void addComponent(StronglyConnectedComponent component);
 	bool equals(SCCList other);
-	list<StronglyConnectedComponent> getComponents();
+	vector<StronglyConnectedComponent> getComponents();
 	string toString();
 };
 

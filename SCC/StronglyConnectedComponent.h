@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_set>
+#include <set>
 
 using namespace std;
 
@@ -9,13 +9,13 @@ using namespace std;
 */
 class StronglyConnectedComponent {
 private: 
-	unordered_set<int> nodes;
+	set<int> nodes;
 
 public:
 	StronglyConnectedComponent();
-	StronglyConnectedComponent(unordered_set<int> set);
+	StronglyConnectedComponent(set<int> set);
 	void addNode(int node);
-	unordered_set<int> getNodes();
+	set<int> getNodes();
 	bool equals(StronglyConnectedComponent other);
 	string toString();
 	int size();

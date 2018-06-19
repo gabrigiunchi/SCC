@@ -1,7 +1,7 @@
 #include "SCCList.h"
 #include <sstream>
 
-list<StronglyConnectedComponent> SCCList::getComponents() {
+vector<StronglyConnectedComponent> SCCList::getComponents() {
 	return this->components;
 }
 
@@ -18,12 +18,13 @@ bool SCCList::equals(SCCList other) {
 		return false;
 	}
 
-	list<StronglyConnectedComponent> otherList = other.getComponents();
-	for (auto it1 = this->components.begin(); it1 != this->components.end(); ++it1) {
-		bool found = false;
+	vector<StronglyConnectedComponent> otherList = other.getComponents();
+	bool found = false;
+	for (int i = 0; i < this->components.size(); i++) {
+		found = false;
 
-		for (auto it2 = otherList.begin(); it2 != otherList.end(); ++it2) {
-			if (it1->equals(*it2)) {
+		for (int k = 0; k < otherList.size(); k++) {
+			if (this->components[i].equals(otherList[k])) {
 				found = true;
 				break;
 			}
