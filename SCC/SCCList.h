@@ -13,8 +13,10 @@ private:
 	vector<StronglyConnectedComponent> components;
 
 public:
+	SCCList();
+	SCCList(vector<StronglyConnectedComponent> c);
 	void addComponent(StronglyConnectedComponent component);
-	bool equals(SCCList other);
+	bool equals(SCCList* other);
 	vector<StronglyConnectedComponent> getComponents();
 	string toString();
 };
