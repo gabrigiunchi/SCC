@@ -17,10 +17,9 @@ set<int> StronglyConnectedComponent::getNodes() {
 	return this->nodes;
 }
 
-bool StronglyConnectedComponent::equals(StronglyConnectedComponent other) {
-	return this->nodes == other.getNodes();
+bool StronglyConnectedComponent::equals(StronglyConnectedComponent* other) {
+	return this->size() == other->size() && this->nodes == other->getNodes();
 }
-
 
 string StronglyConnectedComponent::toString() {
 	stringstream s;

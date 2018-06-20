@@ -16,7 +16,7 @@ public:
 	StronglyConnectedComponent(set<int> set);
 	void addNode(int node);
 	set<int> getNodes();
-	bool equals(StronglyConnectedComponent other);
+	bool equals(StronglyConnectedComponent* other);
 	string toString();
 	int size();
 };

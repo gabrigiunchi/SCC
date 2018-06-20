@@ -24,17 +24,12 @@ Graph* generateGraph(int size) {
 }
 
 SCCList convert(vector<int> v, int nComponents) {
-	vector<set<int>> groups(nComponents);
+	vector<StronglyConnectedComponent> groups(nComponents);
 
 	for (int current = 0; current < v.size(); current++) {
 		int component = v[current];
-		groups[component].insert(current);
+		groups[component].addNode(current);
 	}
 
-	SCCList res;
-	for (int i = 0; i < groups.size(); i++) {
-		res.addComponent(StronglyConnectedComponent(groups[i]));
-	}
-
-	return res;
+	return SCCList(groups);
 }
