@@ -20,3 +20,9 @@ public:
 *	Finds the strongly connected components of the graph using the boost library's algorithm.
 */
 vector<int> SCCBoost(Graph* g, int* nComponents);
+
+/*
+*	Finds the strongly connected components of the graph using the boost library's algorithm.
+*	There is a small overhead due to the conversion from the data structure given by the library into an instance of SCCList
+*/
+SCCList SCCBoost(Graph* g);
