@@ -27,7 +27,7 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	duration2 = (clock() - start2) / (double)CLOCKS_PER_SEC;
 	SCCList l2 = convert(v2, nComponents);
 
-	BenchmarkResult result(this->strategy->toString(), l1.equals(l2), g->getSize(), duration1, duration2);
+	BenchmarkResult result(this->strategy->toString(), l1.equals(&l2), g->getSize(), duration1, duration2);
 	return result;
 }
 
