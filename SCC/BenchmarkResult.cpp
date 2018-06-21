@@ -7,7 +7,6 @@ BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, 
 	this->graphSize = graphSize;
 	this->customAlgorithmTime = customTime;
 	this->boostAlgorithmTime = boostTime;
-	this->diffTime = this->customAlgorithmTime - this->boostAlgorithmTime;
 }
 
 string BenchmarkResult::getAlgorithm() {
@@ -31,7 +30,13 @@ double BenchmarkResult::getBoostAlgorithmTime() {
 }
 
 double BenchmarkResult::getDiffTime() {
-	return this->diffTime;
+	return this->customAlgorithmTime - this->boostAlgorithmTime;
+}
+
+double BenchmarkResult::getPerformanceDifference() {
+	double min = this->boostAlgorithmTime < this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
+	double max = this->boostAlgorithmTime > this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
+	return (1 - min / max) * 100;
 }
 
 string BenchmarkResult::toString() {
@@ -42,7 +47,8 @@ string BenchmarkResult::toString() {
 		<< ", success: " << (this->success ? "true" : "false")
 		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime << "s"
 		<< ", Boost time: " << this->boostAlgorithmTime
-		<< ", difference: " << this->diffTime << "s"
+		<< ", difference: " << round(this->getPerformanceDifference()) << "% "
+		<< (this->customAlgorithmTime < this->boostAlgorithmTime ? "faster" : "slower")
 		<< " }";
 
 	return s.str();

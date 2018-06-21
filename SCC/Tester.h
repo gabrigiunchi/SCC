@@ -12,5 +12,6 @@ public:
 	BenchmarkManager performeTests(int n, int minSize, int step);
 	BenchmarkManager performeTests(int n, int minSize);
 	void memoryTest();
+	void manualTest();
 };
 

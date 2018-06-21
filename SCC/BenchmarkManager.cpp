@@ -22,16 +22,36 @@ double BenchmarkManager::getAverageDiffTime() {
 	return total / (double)this->results.size();
 }
 
+double BenchmarkManager::getAveragePerformanceDifference() {
+	double customTime = 0;
+	double boostTime = 0;
+
+	for (auto it = this->results.begin(); it != this->results.end(); ++it) {
+		customTime += it->getCustomAlgorithmTime();
+		boostTime += it->getBoostAlgorithmTime();
+	}
+
+	double min = customTime < boostTime ? customTime : boostTime;
+	double max = customTime > boostTime ? customTime : boostTime;
+
+	this->isBoostWinner = boostTime < customTime;
+
+	return (1 - min / max) * 100;
+}
+
 void BenchmarkManager::clear() {
 	this->results.clear();
 }
 
 string BenchmarkManager::toString() {
 	stringstream s;
+	double diff = round(this->getAveragePerformanceDifference());
+
 	s << "{ "
 		<< "number of tests: " << this->results.size()
 		<< ", success rate: " << this->getSuccessRate() << "%"
-		<< ", average difference: " << this->getAverageDiffTime() << "s"
+		<< ", difference: " << diff << "% "
+		<< (this->isBoostWinner ? "slower" : "faster")
 		<< " }";
 
 	return s.str();

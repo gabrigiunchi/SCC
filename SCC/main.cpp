@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h> 
+#include <stdlib.h>
 #include "Tester.h"
 #include "SCCTarjan.h"
 #include "SCCNuutila.h"
@@ -21,13 +22,10 @@ void getInput(int* n, int *minSize, int* step) {
 	cout << endl;
 }
 
-void menu() {
+void menu(int minSize, int step, int maxSize) {
 	string input;
 	
 	do {
-		int minSize = 10;
-		int step = 10;
-		int maxSize = 1000;
 		int n = (maxSize - minSize) / step + 1;
 
 		cout << endl << " 1) Test Tarjan algorithm" << endl
@@ -62,7 +60,7 @@ void menu() {
 			BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step);
 			cout << " Tarjan: " << resultTarjan.toString() << endl
 				<< " Nuutila: " << resultNuutila.toString() << endl
-				<< resultPearce.toString() << endl;
+				<< " Pearce: " << resultPearce.toString() << endl;
 		}
 		else if (input == "5") {
 			cout << endl;
@@ -72,11 +70,19 @@ void menu() {
 	} while (input != "exit" && input != "quit");
 }
 
-int main() {
+int main(int argc, char* argv[]) {
 	// Inizialize seed for the random fuction
 	srand(time(NULL));
 
-	menu();
-	
+	int minSize = 1000;
+	int step = 1000;
+	int maxSize = 10000;
+
+	if (argc >= 2) minSize = atoi(argv[1]);
+	if (argc >= 3) step = atoi(argv[2]);
+	if (argc > 3) maxSize = atoi(argv[3]);
+
+	menu(minSize, step, maxSize);
+
 	return 0;
 }

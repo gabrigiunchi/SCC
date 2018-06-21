@@ -11,8 +11,7 @@ private:
 	bool success;
 	double customAlgorithmTime;
 	double boostAlgorithmTime;
-	double diffTime; // Time difference between custom algorithm and boost's algorithm
-
+	
 public:
 	BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime);
 	string toString();
@@ -22,5 +21,6 @@ public:
 	double getCustomAlgorithmTime();
 	double getBoostAlgorithmTime();
 	double getDiffTime();
+	double getPerformanceDifference();
 };
 
