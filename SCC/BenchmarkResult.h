@@ -20,7 +20,6 @@ public:
 	bool isSuccessfull();
 	double getCustomAlgorithmTime();
 	double getBoostAlgorithmTime();
-	double getDiffTime();
 	double getPerformanceDifference();
 };
 

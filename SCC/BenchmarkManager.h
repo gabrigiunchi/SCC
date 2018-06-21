@@ -7,7 +7,7 @@ using namespace std;
 
 /*
 *	Class which stores the results of different tests and provides information about the performance of the algorithm used,
-*	for example the success rate
+*	for instance the success rate
 */
 class BenchmarkManager {
 private:
@@ -17,7 +17,6 @@ private:
 public:
 	void addResult(BenchmarkResult result);
 	double getSuccessRate();
-	double getAverageDiffTime();
 	double getAveragePerformanceDifference();
 	void clear(); // eliminate the past results
 	string toString();

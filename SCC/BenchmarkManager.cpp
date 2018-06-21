@@ -13,15 +13,6 @@ double BenchmarkManager::getSuccessRate() {
 	return ((double)successCount / (double)this->results.size()) * (double)100;
 }
 
-double BenchmarkManager::getAverageDiffTime() {
-	double total = 0;
-	for (auto it = this->results.begin(); it != this->results.end(); ++it) {
-		total += (*it).getDiffTime();
-	}
-
-	return total / (double)this->results.size();
-}
-
 double BenchmarkManager::getAveragePerformanceDifference() {
 	double customTime = 0;
 	double boostTime = 0;

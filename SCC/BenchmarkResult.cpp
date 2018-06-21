@@ -29,10 +29,6 @@ double BenchmarkResult::getBoostAlgorithmTime() {
 	return this->boostAlgorithmTime;
 }
 
-double BenchmarkResult::getDiffTime() {
-	return this->customAlgorithmTime - this->boostAlgorithmTime;
-}
-
 double BenchmarkResult::getPerformanceDifference() {
 	double min = this->boostAlgorithmTime < this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
 	double max = this->boostAlgorithmTime > this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
