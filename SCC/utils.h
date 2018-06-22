@@ -10,6 +10,8 @@ using namespace std;
 */
 int random(int limit);
 
+double round(double n, int precision);
+
 /*
 *	Generates a random graph with the given size
 */

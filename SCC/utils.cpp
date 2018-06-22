@@ -5,6 +5,15 @@ int random(int limit) {
 	return rand() % limit;
 }
 
+double round(double n, int precision) {
+	if (precision <= 0) {
+		return n;
+	}
+
+	double temp = pow(10, precision);
+	return round(n * temp) / temp;
+}
+
 Graph* generateGraph(int size) {
 	if (size <= 0) {
 		return new Graph(0);

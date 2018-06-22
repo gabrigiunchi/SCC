@@ -1,5 +1,6 @@
 #include "BenchmarkResult.h"
 #include <sstream>
+#include "utils.h"
 
 BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime) {
 	this->algorithm = algorithm;
@@ -45,16 +46,14 @@ string BenchmarkResult::toString() {
 		<< ", Boost time: " << this->boostAlgorithmTime
 		<< ", difference: ";
 
-	if (this->customAlgorithmTime < this->boostAlgorithmTime) {
-		s << round(this->getPerformanceDifference()) << "% faster";
-	}
-	else if (this->boostAlgorithmTime < this->customAlgorithmTime) {
-		s << round(this->getPerformanceDifference()) << "% slower";
-	}
-	else {
+	double difference = round(this->getPerformanceDifference(), 1);
+	if (difference == 0) {
 		s << "none";
 	}
-		
+	else {
+		s << difference << "% " << (this->customAlgorithmTime < this->boostAlgorithmTime ? "faster" : "slower");
+	}
+	
 	s << " }";
 
 	return s.str();

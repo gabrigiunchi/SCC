@@ -1,5 +1,6 @@
 #include "BenchmarkManager.h"
 #include <sstream>
+#include "utils.h"
 
 void BenchmarkManager::addResult(BenchmarkResult result) {
 	this->results.push_back(result);
@@ -36,7 +37,7 @@ void BenchmarkManager::clear() {
 
 string BenchmarkManager::toString() {
 	stringstream s;
-	double diff = round(this->getAveragePerformanceDifference());
+	double diff = round(this->getAveragePerformanceDifference(), 1);
 
 	s << "{ "
 		<< "number of tests: " << this->results.size()
