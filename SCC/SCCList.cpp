@@ -29,7 +29,7 @@ bool SCCList::equals(SCCList* other) {
 	boost::dynamic_bitset<> visited(this->getComponents().size());
 	bool found = false;
 
-	for (int i = 0; i < this->components.size(); i++) {
+	for (size_t i = 0; i < this->components.size(); i++) {
 		found = false;
 
 		// Exploit the fact that often equal components are on the same position in the array
@@ -39,7 +39,7 @@ bool SCCList::equals(SCCList* other) {
 		}
 
 		else {
-			for (int k = 0; k < otherList.size(); k++) {
+			for (size_t k = 0; k < otherList.size(); k++) {
 				if (!visited[k] && this->components[i].equals(&otherList[k])) {
 					found = true;
 					visited[k] = true;
