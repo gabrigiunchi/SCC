@@ -43,9 +43,19 @@ string BenchmarkResult::toString() {
 		<< ", success: " << (this->success ? "true" : "false")
 		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime << "s"
 		<< ", Boost time: " << this->boostAlgorithmTime
-		<< ", difference: " << round(this->getPerformanceDifference()) << "% "
-		<< (this->customAlgorithmTime < this->boostAlgorithmTime ? "faster" : "slower")
-		<< " }";
+		<< ", difference: ";
+
+	if (this->customAlgorithmTime < this->boostAlgorithmTime) {
+		s << round(this->getPerformanceDifference()) << "% faster";
+	}
+	else if (this->boostAlgorithmTime < this->customAlgorithmTime) {
+		s << round(this->getPerformanceDifference()) << "% slower";
+	}
+	else {
+		s << "none";
+	}
+		
+	s << " }";
 
 	return s.str();
 }
