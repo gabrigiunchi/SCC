@@ -7,7 +7,7 @@
 #include "SCCPearce.h"
 #include "utils.h"
 
-#define DEFAULT_N_TESTS 10
+#define DEFAULT_N_TESTS 100
 
 using namespace std;
 
@@ -36,17 +36,20 @@ void menu() {
 	int n = DEFAULT_N_TESTS;
 	string input;
 	bool exit = false;
+	double factor = 1;
 
 	do {
-		cout << endl 
+		cout << endl
 			<< " 0) Exit" << endl
 			<< " 1) Test Tarjan algorithm" << endl
 			<< " 2) Test Nuutila algorithm" << endl
 			<< " 3) Test Pearce algorithm" << endl
 			<< " 4) Test all algorithms" << endl
 			<< " 5) Memory test" << endl
-			<< " 6) Set parameters (current: number of tests=" << n << ", start graph size=" << minSize << ", step=" << step << ")"
-			<< endl << endl << " > ";
+			<< " 6) Set test parameters (current: number of tests=" << n << ", start graph size=" << minSize << ", step=" << step << ")"
+				<< endl
+			<< " 7) Set edges factor (current: " << factor << ")" << endl
+			<< endl << " > ";
 
 		cin >> input;
 		int code = parseInt(input[0]); // Parse the first character of the string
@@ -58,9 +61,9 @@ void menu() {
 			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step).toString() << endl; break;
 			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step).toString() << endl; break;
 			case 4: {
-				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step);
-				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step);
-				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step);
+				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
+				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
+				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step, factor);
 				cout << " Tarjan: " << resultTarjan.toString() << endl
 					<< " Nuutila: " << resultNuutila.toString() << endl
 					<< " Pearce: " << resultPearce.toString() << endl;
@@ -69,6 +72,11 @@ void menu() {
 			case 5: Tester(new SCCPearce()).memoryTest(); break;
 			case 6: {
 				getInput(&n, &minSize, &step);
+				break;
+			}
+			case 7: {
+				cout << "Insert factor: ";
+				cin >> factor;
 				break;
 			}
 			default: break;

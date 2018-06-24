@@ -14,13 +14,13 @@ double round(double n, int precision) {
 	return round(n * temp) / temp;
 }
 
-Graph* generateGraph(int size) {
+Graph* generateGraph(int size, double factor) {
 	if (size <= 0) {
 		return new Graph(0);
 	}
 
 	Graph* g = new Graph(size);
-	int nEdges = size + random(size);
+	int nEdges = size * factor;
 	for (int i = 0; i < nEdges; i++) {
 		int source = random(size);
 		int destination = random(size);
@@ -30,6 +30,10 @@ Graph* generateGraph(int size) {
 	}
 
 	return g;
+}
+
+Graph* generateGraph(int size) {
+	return generateGraph(size, 1);
 }
 
 SCCList convert(vector<int> v, int nComponents) {

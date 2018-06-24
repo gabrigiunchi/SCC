@@ -43,7 +43,7 @@ string BenchmarkResult::toString() {
 		<< ", graph size: " << this->graphSize
 		<< ", success: " << (this->success ? "true" : "false")
 		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime << "s"
-		<< ", Boost time: " << this->boostAlgorithmTime
+		<< ", Boost time: " << this->boostAlgorithmTime << "s"
 		<< ", difference: ";
 
 	double difference = round(this->getPerformanceDifference(), 1);

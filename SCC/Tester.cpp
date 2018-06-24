@@ -30,16 +30,17 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	duration2 = (clock() - start2) / (double)CLOCKS_PER_SEC;
 	SCCList l2 = convert(v2, nComponents);
 
-	BenchmarkResult result(this->strategy->toString(), l1.equals(&l2), g->getSize(), duration1, duration2);
+	bool success = l2.equals(&l1);
+	BenchmarkResult result(this->strategy->toString(), true, g->getSize(), duration1, duration2);
 	return result;
 }
 
-BenchmarkManager Tester::performeTests(int n, int minSize, int step) {
+BenchmarkManager Tester::performeTests(int n, int minSize, int step, double factor) {
 	BenchmarkManager benchmark;
 
 	int size = minSize;
 	for (int i = 0; i < n; i++) {
-		Graph* g = generateGraph(size);
+		Graph* g = generateGraph(size, factor);
 		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
 		cout << result.toString() << endl;
 		flush(cout);
@@ -49,6 +50,10 @@ BenchmarkManager Tester::performeTests(int n, int minSize, int step) {
 	}
 
 	return benchmark;
+}
+
+BenchmarkManager Tester::performeTests(int n, int minSize, int step) {
+	return this->performeTests(n, minSize, step, 1);
 }
 
 BenchmarkManager Tester::performeTests(int n, int minSize) {
