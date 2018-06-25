@@ -13,7 +13,7 @@ void SCCPearce::visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::d
 	index++;
 	
 	auto children = g->getChildren(v);
-	for (auto it = children.begin(); it != children.end(); ++it) {
+	for (auto it = children->begin(); it != children->end(); ++it) {
 		int w = *it;
 		if (!(*visited)[w]) {
 			this->visit(g, w, rindex, stack, inComponent, visited, strongComponents);
@@ -24,17 +24,18 @@ void SCCPearce::visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::d
 			root = false;
 		}
 	}
+	delete children;
 
 	if (root) {
 		inComponent->set(v, true);
-		StronglyConnectedComponent component;
+		StronglyConnectedComponent* component = new StronglyConnectedComponent();
 		while (!stack->empty() && rindex[v] <= rindex[stack->top()]) {
 			int w = stack->top();
 			stack->pop();
 			inComponent->set(w, true);
-			component.addNode(w);
+			component->addNode(w);
 		}
-		component.addNode(v);
+		component->addNode(v);
 		strongComponents->addComponent(component);
 	}
 	else {

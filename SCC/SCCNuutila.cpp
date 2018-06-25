@@ -15,7 +15,7 @@ void SCCNuutila::visit(Graph* g, int parent, int disc[], int low[], stack<int> *
 
 	// for each successor of the node
 	auto children = g->getChildren(parent);
-	for (auto i = children.begin(); i != children.end(); ++i) {
+	for (auto i = children->begin(); i != children->end(); ++i) {
 		int child = *i;
 
 		// If the node hasn't been visited yet we continue the dfs
@@ -31,18 +31,19 @@ void SCCNuutila::visit(Graph* g, int parent, int disc[], int low[], stack<int> *
 			low[parent] = min(low[parent], disc[child]);
 		}
 	}
+	delete children;
 
 	// If parent is the root node of our group then we have found a strong component
 	if (low[parent] == disc[parent]) {
 		// Collect the node which are in the strong component
-		StronglyConnectedComponent group;
+		StronglyConnectedComponent* group = new StronglyConnectedComponent();
 		while (!stack->empty() && disc[stack->top()] > disc[parent]) {
 			int node = stack->top();
-			group.addNode(node);
+			group->addNode(node);
 			stackMember->set(node, false);
 			stack->pop();
 		}
-		group.addNode(parent);
+		group->addNode(parent);
 		stackMember->set(parent, false);
 
 		// Add the strong component just calculated to the list of strong components

@@ -10,14 +10,15 @@ using namespace std;
 */
 class SCCList {
 private:
-	vector<StronglyConnectedComponent> components;
+	vector<StronglyConnectedComponent*>* components;
 
 public:
 	SCCList();
-	SCCList(vector<StronglyConnectedComponent> c);
-	void addComponent(StronglyConnectedComponent component);
+	~SCCList();
+	SCCList(vector<StronglyConnectedComponent*>* c);
+	void addComponent(StronglyConnectedComponent* component);
 	bool equals(SCCList* other);
-	vector<StronglyConnectedComponent>* getComponents();
+	vector<StronglyConnectedComponent*>* getComponents();
 	string toString();
 };
 

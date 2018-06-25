@@ -9,11 +9,11 @@ using namespace std;
 */
 class StronglyConnectedComponent {
 private: 
-	set<int> nodes;
+	set<int>* nodes;
 
 public:
 	StronglyConnectedComponent();
-	StronglyConnectedComponent(set<int> set);
+	~StronglyConnectedComponent();
 	void addNode(int node);
 	set<int>* getNodes();
 	bool equals(StronglyConnectedComponent* other);

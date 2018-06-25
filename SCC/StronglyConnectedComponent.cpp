@@ -1,24 +1,24 @@
 #include "StronglyConnectedComponent.h"
 #include <sstream>
 
-StronglyConnectedComponent::StronglyConnectedComponent() {}
+StronglyConnectedComponent::~StronglyConnectedComponent() {
+	delete this->nodes;
+}
 
-StronglyConnectedComponent::StronglyConnectedComponent(set<int> set) {
-	for (auto it = set.begin(); it != set.end(); ++it) {
-		this->addNode(*it);
-	}
+StronglyConnectedComponent::StronglyConnectedComponent() {
+	this->nodes = new set<int>();
 }
 
 void StronglyConnectedComponent::addNode(int node) {
-	this->nodes.insert(node);
+	this->nodes->insert(node);
 }
 
 set<int>* StronglyConnectedComponent::getNodes() {
-	return &this->nodes;
+	return this->nodes;
 }
 
 bool StronglyConnectedComponent::equals(StronglyConnectedComponent* other) {
-	return this->size() == other->size() && this->nodes ==  *other->getNodes();
+	return this->size() == other->size() && *(this->nodes) == *(other->getNodes());
 }
 
 string StronglyConnectedComponent::toString() {
@@ -26,9 +26,9 @@ string StronglyConnectedComponent::toString() {
 	
 	s << "[";
 	int i = 1;
-	for (auto it = this->nodes.begin(); it != this->nodes.end(); ++it) {
+	for (auto it = this->nodes->begin(); it != this->nodes->end(); ++it) {
 		s << *it;
-		if (i != this->nodes.size()) {
+		if (i != this->nodes->size()) {
 			s << ", ";
 		}
 		i++;
@@ -39,5 +39,5 @@ string StronglyConnectedComponent::toString() {
 }
 
 int StronglyConnectedComponent::size() {
-	return this->nodes.size();
+	return this->nodes->size();
 }

@@ -25,7 +25,7 @@ public:
 	/*
 	*	Returns the adjacent vertices of a specific vertex
 	*/
-	std::unordered_set<int> getChildren(int node);
+	std::unordered_set<int>* getChildren(int node);
 
 	graph_t* getGraph();
 	int getSize();

@@ -17,7 +17,7 @@ void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *s
 
 	// for each successor of the node
 	auto children = g->getChildren(parent);
-	for (auto i = children.begin(); i != children.end(); ++i) {
+	for (auto i = children->begin(); i != children->end(); ++i) {
 		int child = *i;
 
 		// If the node hasn't been visited yet we continue the dfs
@@ -33,21 +33,22 @@ void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *s
 			low[parent] = min(low[parent], disc[child]);
 		}
 	}
+	delete children;
 
 	int node = 0;
 
 	// If parent is the root node of our group then we have found a strong component
 	if (low[parent] == disc[parent]) {
 		// Collect the node which are in the strong component
-		StronglyConnectedComponent group;
+		StronglyConnectedComponent* group = new StronglyConnectedComponent();
 		while (stack->top() != parent) {
 			node = stack->top();
-			group.addNode(node);
+			group->addNode(node);
 			stackMember->set(node, false);
 			stack->pop();
 		}
 		node = stack->top();
-		group.addNode(node);
+		group->addNode(node);
 
 		stackMember->set(node, false);
 		stack->pop();
