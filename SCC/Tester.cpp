@@ -1,9 +1,8 @@
 #include "Tester.h"
 #include <iostream>
 #include "utils.h"
-#include <iostream>
-
-using namespace std;
+#include <boost/graph/strong_components.hpp>
+#include "SCCBoost.h"
 
 Tester::Tester(SCCStrategy* strategy) {
 	this->strategy = strategy;
@@ -15,23 +14,18 @@ Tester::~Tester() {
 
 BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	// Calculate time with custom algorithm
-	clock_t start1;
-	double duration1;
-	start1 = clock();
-	SCCList l1 = this->strategy->getSCC(g);
-	duration1 = (clock() - start1) / (double)CLOCKS_PER_SEC;
+	double t1 = 0;
+	SCCList* l1 = this->strategy->getSCC(g, &t1);
 
 	// Calculate time with boost's algorithm
-	clock_t start2;
-	double duration2;
-	start2 = clock();
-	int nComponents = 0;
-	vector<int> v2 = SCCBoost(g, &nComponents);
-	duration2 = (clock() - start2) / (double)CLOCKS_PER_SEC;
-	SCCList l2 = convert(v2, nComponents);
+	double t2 = 0;
+	SCCList* l2 = SCCBoost().getSCC(g, &t2);
 
-	bool success = l2.equals(&l1);
-	BenchmarkResult result(this->strategy->toString(), true, g->getSize(), duration1, duration2);
+	bool success = l2->equals(l1);
+	BenchmarkResult result(this->strategy->toString(), success, g->getSize(), t1, t2);
+
+	delete l1;
+	delete l2;
 	return result;
 }
 
@@ -71,14 +65,18 @@ void Tester::manualTest() {
 	g->addEdge(2, 1);
 	g->addEdge(0, 3);
 	g->addEdge(3, 4);
-	cout << this->strategy->getSCC(g).toString() << endl;
+	SCCList* l = this->strategy->getSCC(g);
+	cout << l->toString() << endl;
+	delete l;
 	delete g;
 
 	g = new Graph(4);
 	g->addEdge(0, 1);
 	g->addEdge(1, 2);
 	g->addEdge(2, 3);
-	cout << this->strategy->getSCC(g).toString() << endl;
+	l = this->strategy->getSCC(g);
+	cout << l->toString() << endl;
+	delete l;
 	delete g;
 
 	g = new Graph(7);
@@ -90,7 +88,9 @@ void Tester::manualTest() {
 	g->addEdge(1, 6);
 	g->addEdge(3, 5);
 	g->addEdge(4, 5);
-	cout << this->strategy->getSCC(g).toString() << endl;
+	l = this->strategy->getSCC(g);
+	cout << l->toString() << endl;
+	delete l;
 	delete g;
 
 	g = new Graph(11);
@@ -111,7 +111,9 @@ void Tester::manualTest() {
 	g->addEdge(7, 9);
 	g->addEdge(8, 9);
 	g->addEdge(9, 8);
-	cout << this->strategy->getSCC(g).toString() << endl;
+	l = this->strategy->getSCC(g);
+	cout << l->toString() << endl;
+	delete l;
 	delete g;
 
 	g = new Graph(5);
@@ -121,7 +123,9 @@ void Tester::manualTest() {
 	g->addEdge(2, 4);
 	g->addEdge(3, 0);
 	g->addEdge(4, 2);
-	cout << this->strategy->getSCC(g).toString() << endl;
+	l = this->strategy->getSCC(g);
+	cout << l->toString() << endl;
+	delete l;
 	delete g;
 
 	system("pause");
