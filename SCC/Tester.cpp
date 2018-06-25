@@ -2,6 +2,7 @@
 #include <iostream>
 #include "utils.h"
 #include "SCCBoost.h"
+#include "SCCTarjan.h"
 
 Tester::Tester(SCCStrategy* strategy) {
 	this->strategy = strategy;
@@ -32,11 +33,10 @@ BenchmarkManager Tester::performeTests(int n, int minSize, int step, double fact
 	BenchmarkManager benchmark;
 
 	int size = minSize;
-	for (int i = 0; i < n; i++) {
+	for (int i = 1; i <= n; i++) {
 		Graph* g = generateGraph(size, factor);
 		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
-		cout << result.toString() << endl;
-		flush(cout);
+		cout << i << "/" << n << ": " << result.toString() << endl;
 		benchmark.addResult(result);
 		delete g;
 		size += step;
@@ -54,7 +54,7 @@ BenchmarkManager Tester::performeTests(int n, int minSize) {
 }
 
 void Tester::memoryTest() {
-	this->performeTests(100, 1000, 0);
+	this->performeTests(10000, 100, 0, 1);
 }
 
 void Tester::manualTest() {
