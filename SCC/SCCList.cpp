@@ -7,6 +7,10 @@
 using namespace std;
 
 SCCList::~SCCList() {
+	for (auto it = this->components->begin(); it != this->components->end(); ++it) {
+		delete *it;
+	}
+
 	delete this->components;
 }
 

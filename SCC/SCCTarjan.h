@@ -8,6 +8,7 @@ private:
 
 public:
 	SCCTarjan();
+	~SCCTarjan();
 	SCCList* getSCC(Graph* g);
 	SCCList* getSCC(Graph* g, double* time);
 };

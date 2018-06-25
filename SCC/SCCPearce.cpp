@@ -60,6 +60,11 @@ SCCList* SCCPearce::getSCC(Graph* g) {
 		}
 	}
 
+	delete rindex;
+	delete visited;
+	delete inComponent;
+	delete stack;
+
 	return strongComponents;
 }
 

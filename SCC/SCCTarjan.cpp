@@ -4,6 +4,8 @@
 
 SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 
+SCCTarjan::~SCCTarjan() { }
+
 void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
 	

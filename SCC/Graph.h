@@ -20,6 +20,7 @@ private:
 
 public:
 	Graph(unsigned long size);
+	~Graph();
 	void addEdge(int source, int destination);
 
 	/*
