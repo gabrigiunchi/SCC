@@ -1,7 +1,6 @@
 #include "Tester.h"
 #include <iostream>
 #include "utils.h"
-#include <boost/graph/strong_components.hpp>
 #include "SCCBoost.h"
 
 Tester::Tester(SCCStrategy* strategy) {

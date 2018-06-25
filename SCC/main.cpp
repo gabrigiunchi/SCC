@@ -57,9 +57,9 @@ void menu() {
 		cout << endl;
 		switch (code) {
 			case 0: exit = true; break;
-			case 1: cout << Tester(new SCCTarjan()).performeTests(n, minSize, step).toString() << endl; break;
-			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step).toString() << endl; break;
-			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step).toString() << endl; break;
+			case 1: cout << Tester(new SCCTarjan()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step, factor).toString() << endl; break;
 			case 4: {
 				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
