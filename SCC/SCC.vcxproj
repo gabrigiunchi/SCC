@@ -122,6 +122,7 @@
     <ClCompile Include="BenchmarkResult.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SCCBoost.cpp" />
     <ClCompile Include="SCCList.cpp" />
     <ClCompile Include="SCCNuutila.cpp" />
     <ClCompile Include="SCCPearce.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="BenchmarkManager.h" />
     <ClInclude Include="BenchmarkResult.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="SCCBoost.h" />
     <ClInclude Include="SCCList.h" />
     <ClInclude Include="SCCNuutila.h" />
     <ClInclude Include="SCCPearce.h" />

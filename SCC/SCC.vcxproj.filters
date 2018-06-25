@@ -51,6 +51,9 @@
     <ClCompile Include="SCCPearce.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SCCBoost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BenchmarkManager.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SCCPearce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SCCBoost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
