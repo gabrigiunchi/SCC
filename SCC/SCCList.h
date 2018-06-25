@@ -17,7 +17,7 @@ public:
 	SCCList(vector<StronglyConnectedComponent> c);
 	void addComponent(StronglyConnectedComponent component);
 	bool equals(SCCList* other);
-	vector<StronglyConnectedComponent> getComponents();
+	vector<StronglyConnectedComponent>* getComponents();
 	string toString();
 };
 
