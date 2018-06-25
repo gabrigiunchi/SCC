@@ -13,12 +13,12 @@ void StronglyConnectedComponent::addNode(int node) {
 	this->nodes.insert(node);
 }
 
-set<int> StronglyConnectedComponent::getNodes() {
-	return this->nodes;
+set<int>* StronglyConnectedComponent::getNodes() {
+	return &this->nodes;
 }
 
 bool StronglyConnectedComponent::equals(StronglyConnectedComponent* other) {
-	return this->size() == other->size() && this->nodes == other->getNodes();
+	return this->size() == other->size() && this->nodes ==  *other->getNodes();
 }
 
 string StronglyConnectedComponent::toString() {

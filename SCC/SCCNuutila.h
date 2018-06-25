@@ -7,6 +7,7 @@ private:
 		boost::dynamic_bitset<>* stackMember, SCCList* strongComponents);
 public:
 	SCCNuutila();
-	SCCList getSCC(Graph* g);
+	SCCList* getSCC(Graph* g);
+	SCCList* getSCC(Graph* g, double* time);
 };
 

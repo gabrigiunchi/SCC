@@ -11,8 +11,8 @@ Graph::Graph(unsigned long size) {
 	this->graph = graph_t(size);
 }
 
-graph_t Graph::getGraph() {
-	return this->graph;
+graph_t* Graph::getGraph() {
+	return &this->graph;
 }
 
 int Graph::getSize() {

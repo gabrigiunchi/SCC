@@ -57,16 +57,16 @@ void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *s
 	}
 }
 
-SCCList SCCTarjan::getSCC(Graph* g) {
+SCCList* SCCTarjan::getSCC(Graph* g) {
 	if (g->getSize() <= 0) {
-		return SCCList();
+		return new SCCList();
 	}
 
 	int *disc = new int[g->getSize()];
 	int *low = new int[g->getSize()];
 	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
 	stack<int> *stack = new std::stack<int>();
-	SCCList strongComponents;
+	SCCList* strongComponents = new SCCList();
 
 	// Initialize disc and low (stackMember is already initialized)
 	for (int i = 0; i < g->getSize(); i++) {
@@ -77,7 +77,7 @@ SCCList SCCTarjan::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			visit(g, i, disc, low, stack, stackMember, &strongComponents);
+			visit(g, i, disc, low, stack, stackMember, strongComponents);
 		}
 	}
 
@@ -88,4 +88,11 @@ SCCList SCCTarjan::getSCC(Graph* g) {
 	delete stack;
 
 	return strongComponents;
+}
+
+SCCList* SCCTarjan::getSCC(Graph* g, double* time) {
+	clock_t start = clock();
+	SCCList* l = this->getSCC(g);
+	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
+	return l;
 }

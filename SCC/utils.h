@@ -6,7 +6,7 @@
 using namespace std;
 
 /*
-*	Random number between 0 and (limit - 1)
+*	Returns a random number between 0 and (limit - 1)
 */
 int random(int limit);
 
@@ -23,4 +23,4 @@ Graph* generateGraph(int size);
 Graph* generateGraph(int size, double factor);
 
 // Takes as input the result of the boost's function for calculating SCCs and converts it into a istance of SCCList
-SCCList convert(vector<int> v, int nComponents);
+SCCList* convert(vector<int>* v, int nComponents);

@@ -7,6 +7,7 @@ private:
 		boost::dynamic_bitset<>* visited, SCCList* strongComponents);
 public:
 	SCCPearce();
-	SCCList getSCC(Graph* g);
+	SCCList* getSCC(Graph* g);
+	SCCList* getSCC(Graph* g, double* time);
 };
 

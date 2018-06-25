@@ -42,22 +42,29 @@ void SCCPearce::visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::d
 	}
 }
 
-SCCList SCCPearce::getSCC(Graph* g) {
+SCCList* SCCPearce::getSCC(Graph* g) {
 	if (g->getSize() <= 0) {
-		return SCCList();
+		return new SCCList();
 	}
 
 	int *rindex = new int[g->getSize()];
 	boost::dynamic_bitset<>* visited = new boost::dynamic_bitset<>(g->getSize());
 	boost::dynamic_bitset<>* inComponent = new boost::dynamic_bitset<>(g->getSize());
 	stack<int> *stack = new std::stack<int>();
-	SCCList strongComponents;
+	SCCList* strongComponents = new SCCList();
 
 	for (int i = 0; i < g->getSize(); i++) {
 		if (!(*visited)[i]) {
-			this->visit(g, i, rindex, stack, inComponent, visited, &strongComponents);
+			this->visit(g, i, rindex, stack, inComponent, visited, strongComponents);
 		}
 	}
 
 	return strongComponents;
+}
+
+SCCList* SCCPearce::getSCC(Graph* g, double* time) {
+	clock_t start = clock();
+	SCCList* l = this->getSCC(g);
+	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
+	return l;
 }

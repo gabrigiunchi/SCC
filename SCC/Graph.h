@@ -27,7 +27,7 @@ public:
 	*/
 	std::unordered_set<int> getChildren(int node);
 
-	graph_t getGraph();
+	graph_t* getGraph();
 	int getSize();
 	string toString();
 };
