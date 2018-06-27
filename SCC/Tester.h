@@ -18,6 +18,7 @@ public:
 	Tester(SCCStrategy* strategy);
 	~Tester();
 
+	BenchmarkResult manualTest(Graph* g);
 	BenchmarkManager performeTests(int n, int minSize, int step, double edgeFactor);
 	BenchmarkManager performeTests(int n, int minSize, int step);
 	BenchmarkManager performeTests(int n, int minSize);

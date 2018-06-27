@@ -34,13 +34,17 @@ BenchmarkManager Tester::performeTests(int n, int minSize, int step, double fact
 	for (int i = 1; i <= n; i++) {
 		Graph* g = generateGraph(size, factor);
 		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
-		cout << i << "/" << n << ": " << result.toString() << endl;
+		cout << " " << i << "/" << n << ": " << result.toString() << endl;
 		benchmark.addResult(result);
 		delete g;
 		size += step;
 	}
 
 	return benchmark;
+}
+
+BenchmarkResult Tester::manualTest(Graph* g) {
+	return this->checkAlgorithmCorrectness(g);
 }
 
 BenchmarkManager Tester::performeTests(int n, int minSize, int step) {
