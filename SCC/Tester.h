@@ -4,10 +4,11 @@
 
 class Tester {
 private:
-	SCCStrategy* strategy;
+	SCCStrategy* strategy1;
+	SCCStrategy* strategy2;
 	BenchmarkResult checkAlgorithmCorrectness(Graph* g);
 public:
-	Tester(SCCStrategy* strategy);
+	Tester(SCCStrategy* strategy1, SCCStrategy* strategy2);
 	~Tester();
 	BenchmarkManager performeTests(int n, int minSize, int step, double edgeFactor);
 	BenchmarkManager performeTests(int n, int minSize, int step);
