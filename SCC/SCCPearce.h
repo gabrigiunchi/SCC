@@ -1,6 +1,9 @@
 #pragma once
 #include "SCCStrategy.h"
 
+/*
+	Class which implements the Pearce's algorithm for finding strongly connected components in a directed graph
+*/
 class SCCPearce : public SCCStrategy {
 private:
 	void visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent, 

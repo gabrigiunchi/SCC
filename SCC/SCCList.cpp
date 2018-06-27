@@ -36,7 +36,7 @@ bool SCCList::equals(SCCList* other) {
 	}
 
 	vector<StronglyConnectedComponent*>* otherList = other->getComponents();
-	boost::dynamic_bitset<> visited(this->getComponents()->size());
+	boost::dynamic_bitset<> visited(this->getComponents()->size()); // stores the index of the elements already matched
 	bool found = false;
 
 	for (size_t i = 0; i < this->components->size(); i++) {
@@ -47,7 +47,6 @@ bool SCCList::equals(SCCList* other) {
 			found = true;
 			visited[i] = true;
 		}
-
 		else {
 			for (size_t k = 0; k < otherList->size(); k++) {
 				if (!visited[k] && this->components->at(i)->equals(otherList->at(k))) {

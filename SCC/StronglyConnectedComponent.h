@@ -5,7 +5,7 @@
 using namespace std;
 
 /*
-*	Class which defines the concept of a strongly connected component: a set of vertex which are strongly connected to each other.
+	Class which defines the concept of a strongly connected component: a set of vertex which are strongly connected to each other.
 */
 class StronglyConnectedComponent {
 private: 

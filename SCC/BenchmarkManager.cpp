@@ -1,6 +1,14 @@
 #include "BenchmarkManager.h"
 #include <sstream>
 #include "utils.h"
+#include "SCCStrategy.h"
+
+BenchmarkManager::BenchmarkManager(string algorithm) {
+	this->testAlgorithm = algorithm;
+	SCCStrategy* s = getDefaultStrategy();
+	this->referenceAlgorithm = s->getName();
+	delete s;
+}
 
 void BenchmarkManager::addResult(BenchmarkResult result) {
 	this->results.push_back(result);
@@ -36,7 +44,7 @@ double BenchmarkManager::getAverageTimeDifference() {
 	double total = 0;
 
 	for (auto it = this->results.begin(); it != this->results.end(); it++) {
-		total += it->getTime1() - it->getTime2();
+		total += it->getTimeDifference();
 	}
 
 	return total / (double)this->results.size();
@@ -66,10 +74,10 @@ string BenchmarkManager::getWinner() {
 	double t2 = this->getAverageTime2();
 
 	if (t1 > t2) {
-		return this->algorithm1;
+		return this->testAlgorithm;
 	}
 	else if (t2 > t1) {
-		return this->algorithm2;
+		return this->referenceAlgorithm;
 	}
 
 	return "none";
@@ -81,8 +89,8 @@ string BenchmarkManager::toString() {
 	s << "{ "
 		<< "number of tests: " << this->results.size()
 		<< ", success rate: " << this->getSuccessRate() << "%"
-		<< ", average time1: " << this->getAverageTime1() << "s"
-		<< ", average time2: " << this->getAverageTime2() << "s"
+		<< ", average " << this->testAlgorithm << " time: " << this->getAverageTime1() << "s"
+		<< ", average " << this->referenceAlgorithm << " time: " << this->getAverageTime2() << "s"
 		<< ", winner: " << this->getWinner()
 		<< ", difference: " << this->getAverageTimeDifference() << "s (" 
 		<< round(this->getAveragePerformanceDifference(), 1) << "%)"

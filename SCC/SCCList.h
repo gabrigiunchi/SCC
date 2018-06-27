@@ -6,7 +6,7 @@
 using namespace std;
 
 /*
-*	Class which defines a list of strongly connected components.
+	Class which defines a list of strongly connected components
 */
 class SCCList {
 private:
