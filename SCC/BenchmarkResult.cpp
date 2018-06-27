@@ -37,7 +37,8 @@ double BenchmarkResult::getTime2() {
 double BenchmarkResult::getPerformanceDifference() {
 	double min = this->time2 < this->time1 ? this->time2 : this->time1;
 	double max = this->time2 > this->time1 ? this->time2 : this->time1;
-	return (1 - min / max) * 100;
+
+	return min == max ? 0 : (1 - min / max) * 100;
 }
 
 double BenchmarkResult::getTimeDifference() {
@@ -47,10 +48,10 @@ double BenchmarkResult::getTimeDifference() {
 }
 
 string BenchmarkResult::getWinner() {
-	if (this->time1 > this->time2) {
+	if (this->time1 < this->time2) {
 		return this->testAlgorithm;
 	}
-	else if (this->time2 > this->time1) {
+	else if (this->time2 < this->time1) {
 		return this->referenceAlgorithm;
 	}
 
@@ -65,10 +66,15 @@ string BenchmarkResult::toString() {
 		<< ", success: " << (this->success ? "true" : "false")
 		<< ", " << this->testAlgorithm << " time: " << this->time1 << "s"
 		<< ", " << this->referenceAlgorithm << " time: " << this->time2 << "s"
-		<< ", winner: " << this->getWinner()
-		<< ", difference: " << this->getTimeDifference() << "s (" 
-		<< round(this->getPerformanceDifference(), 1) << "%)"
-		<< " }";
+		<< ", winner: " << this->getWinner();
+
+	double difference = this->getTimeDifference();
+	if (difference != 0) {
+		s << ", difference: " << this->getTimeDifference() << "s ("
+			<< round(this->getPerformanceDifference(), 1) << "%)";
+	}
+
+	s << " }";
 
 	return s.str();
 }

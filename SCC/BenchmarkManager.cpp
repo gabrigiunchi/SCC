@@ -62,7 +62,7 @@ double BenchmarkManager::getAveragePerformanceDifference() {
 	double min = std::min(time1, time2);
 	double max = std::max(time1, time2);
 
-	return (1 - min / max) * 100;
+	return min == max ? 0 : (1 - min / max) * 100;
 }
 
 void BenchmarkManager::clear() {
@@ -73,10 +73,10 @@ string BenchmarkManager::getWinner() {
 	double t1 = this->getAverageTime1();
 	double t2 = this->getAverageTime2();
 
-	if (t1 > t2) {
+	if (t1 < t2) {
 		return this->testAlgorithm;
 	}
-	else if (t2 > t1) {
+	else if (t2 < t1) {
 		return this->referenceAlgorithm;
 	}
 
@@ -91,10 +91,15 @@ string BenchmarkManager::toString() {
 		<< ", success rate: " << this->getSuccessRate() << "%"
 		<< ", average " << this->testAlgorithm << " time: " << this->getAverageTime1() << "s"
 		<< ", average " << this->referenceAlgorithm << " time: " << this->getAverageTime2() << "s"
-		<< ", winner: " << this->getWinner()
-		<< ", difference: " << this->getAverageTimeDifference() << "s (" 
-		<< round(this->getAveragePerformanceDifference(), 1) << "%)"
-		<< " }";
+		<< ", winner: " << this->getWinner();
 
+	double difference = this->getAverageTimeDifference();
+	if (difference != 0) {
+		s << ", difference: " << this->getAverageTimeDifference() << "s ("
+			<< round(this->getAveragePerformanceDifference(), 1) << "%)";
+	}
+
+	s << " }";
+		
 	return s.str();
 }
