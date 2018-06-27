@@ -11,13 +11,18 @@ using namespace std;
 */
 class BenchmarkManager {
 private:
+	string algorithm1;
+	string algorithm2;
 	list<BenchmarkResult> results;
-	bool isBoostWinner;
-
+	
 public:
 	void addResult(BenchmarkResult result);
 	double getSuccessRate();
 	double getAveragePerformanceDifference();
+	double getAverageTime1();
+	double getAverageTime2();
+	double getAverageTimeDifference();
+	string getWinner();
 	void clear(); // eliminate the past results
 	string toString();
 };

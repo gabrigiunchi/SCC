@@ -6,20 +6,24 @@ using namespace std;
 
 class BenchmarkResult {
 private:
-	string algorithm;
+	string algorithm1;
+	string algorithm2;
 	int graphSize;
 	bool success;
-	double customAlgorithmTime;
-	double boostAlgorithmTime;
+	double time1;
+	double time2;
 	
 public:
-	BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime);
+	BenchmarkResult(string algorithm1, string algorithm2, bool success, int graphSize, double customTime, double boostTime);
 	string toString();
-	string getAlgorithm();
+	string getAlgorithm1();
+	string getAlgorithm2();
 	int getGraphSize();
 	bool isSuccessfull();
-	double getCustomAlgorithmTime();
-	double getBoostAlgorithmTime();
+	double getTime1();
+	double getTime2();
 	double getPerformanceDifference();
+	double getTimeDifference();
+	string getWinner();
 };
 

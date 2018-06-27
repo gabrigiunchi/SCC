@@ -2,16 +2,21 @@
 #include <sstream>
 #include "utils.h"
 
-BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime) {
-	this->algorithm = algorithm;
+BenchmarkResult::BenchmarkResult(string algorithm1, string algorithm2, bool success, int graphSize, double customTime, double boostTime) {
+	this->algorithm1 = algorithm1;
+	this->algorithm2 = algorithm2;
 	this->success = success;
 	this->graphSize = graphSize;
-	this->customAlgorithmTime = customTime;
-	this->boostAlgorithmTime = boostTime;
+	this->time1 = customTime;
+	this->time2 = boostTime;
 }
 
-string BenchmarkResult::getAlgorithm() {
-	return this->algorithm;
+string BenchmarkResult::getAlgorithm1() {
+	return this->algorithm1;
+}
+
+string BenchmarkResult::getAlgorithm2() {
+	return this->algorithm2;
 }
 
 int BenchmarkResult::getGraphSize() {
@@ -22,39 +27,49 @@ bool BenchmarkResult::isSuccessfull() {
 	return this->success;
 }
 
-double BenchmarkResult::getCustomAlgorithmTime() {
-	return this->customAlgorithmTime;
+double BenchmarkResult::getTime1() {
+	return this->time1;
 }
 
-double BenchmarkResult::getBoostAlgorithmTime() {
-	return this->boostAlgorithmTime;
+double BenchmarkResult::getTime2() {
+	return this->time2;
 }
 
 double BenchmarkResult::getPerformanceDifference() {
-	double min = this->boostAlgorithmTime < this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
-	double max = this->boostAlgorithmTime > this->customAlgorithmTime ? this->boostAlgorithmTime : this->customAlgorithmTime;
+	double min = this->time2 < this->time1 ? this->time2 : this->time1;
+	double max = this->time2 > this->time1 ? this->time2 : this->time1;
 	return (1 - min / max) * 100;
+}
+
+double BenchmarkResult::getTimeDifference() {
+	double max = std::max(this->time1, this->time2);
+	double min = std::min(this->time1, this->time2);
+	return max - min;
+}
+
+string BenchmarkResult::getWinner() {
+	if (this->time1 > this->time2) {
+		return this->algorithm1;
+	}
+	else if (this->time2 > this->time1) {
+		return this->algorithm2;
+	}
+
+	return "none";
 }
 
 string BenchmarkResult::toString() {
 	stringstream s;
 
-	s << "{ algorithm: " << this->algorithm
+	s << "{ algorithms: [" << this->algorithm1 << ", " << this->algorithm2 << "]"
 		<< ", graph size: " << this->graphSize
 		<< ", success: " << (this->success ? "true" : "false")
-		<< ", " << this->algorithm << " time: " << this->customAlgorithmTime << "s"
-		<< ", Boost time: " << this->boostAlgorithmTime << "s"
-		<< ", difference: ";
-
-	double difference = round(this->getPerformanceDifference(), 1);
-	if (difference == 0) {
-		s << "none";
-	}
-	else {
-		s << difference << "% " << (this->customAlgorithmTime < this->boostAlgorithmTime ? "faster" : "slower");
-	}
-	
-	s << " }";
+		<< ", " << this->algorithm1 << " time: " << this->time1 << "s"
+		<< ", " << this->algorithm2 << " time: " << this->time2 << "s"
+		<< ", winner: " << this->getWinner()
+		<< ", difference: " << this->getTimeDifference() << "s (" 
+		<< round(this->getPerformanceDifference(), 1) << "%)"
+		<< " }";
 
 	return s.str();
 }

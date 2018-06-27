@@ -4,25 +4,24 @@
 #include "SCCBoost.h"
 #include "SCCTarjan.h"
 
-Tester::Tester(SCCStrategy* strategy) {
-	this->strategy = strategy;
+Tester::Tester(SCCStrategy* strategy1, SCCStrategy* strategy2) {
+	this->strategy1 = strategy1;
+	this->strategy2 = strategy2;
 }
 
 Tester::~Tester() {
-	delete this->strategy;
+	delete this->strategy1;
+	delete this->strategy2;
 }
 
 BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
-	// Calculate time with custom algorithm
 	double t1 = 0;
-	SCCList* l1 = this->strategy->getSCC(g, &t1);
-
-	// Calculate time with boost's algorithm
 	double t2 = 0;
-	SCCList* l2 = SCCBoost().getSCC(g, &t2);
+	SCCList* l1 = this->strategy1->getSCC(g, &t1);
+	SCCList* l2 = this->strategy2->getSCC(g, &t2);
 
 	bool success = l2->equals(l1);
-	BenchmarkResult result(this->strategy->toString(), success, g->getSize(), t1, t2);
+	BenchmarkResult result(this->strategy1->toString(), this->strategy2->toString(), success, g->getSize(), t1, t2);
 
 	delete l1;
 	delete l2;
@@ -64,7 +63,7 @@ void Tester::manualTest() {
 	g->addEdge(2, 1);
 	g->addEdge(0, 3);
 	g->addEdge(3, 4);
-	SCCList* l = this->strategy->getSCC(g);
+	SCCList* l = this->strategy1->getSCC(g);
 	cout << l->toString() << endl;
 	delete l;
 	delete g;
@@ -73,7 +72,7 @@ void Tester::manualTest() {
 	g->addEdge(0, 1);
 	g->addEdge(1, 2);
 	g->addEdge(2, 3);
-	l = this->strategy->getSCC(g);
+	l = this->strategy1->getSCC(g);
 	cout << l->toString() << endl;
 	delete l;
 	delete g;
@@ -87,7 +86,7 @@ void Tester::manualTest() {
 	g->addEdge(1, 6);
 	g->addEdge(3, 5);
 	g->addEdge(4, 5);
-	l = this->strategy->getSCC(g);
+	l = this->strategy1->getSCC(g);
 	cout << l->toString() << endl;
 	delete l;
 	delete g;
@@ -110,7 +109,7 @@ void Tester::manualTest() {
 	g->addEdge(7, 9);
 	g->addEdge(8, 9);
 	g->addEdge(9, 8);
-	l = this->strategy->getSCC(g);
+	l = this->strategy1->getSCC(g);
 	cout << l->toString() << endl;
 	delete l;
 	delete g;
@@ -122,7 +121,7 @@ void Tester::manualTest() {
 	g->addEdge(2, 4);
 	g->addEdge(3, 0);
 	g->addEdge(4, 2);
-	l = this->strategy->getSCC(g);
+	l = this->strategy1->getSCC(g);
 	cout << l->toString() << endl;
 	delete l;
 	delete g;
