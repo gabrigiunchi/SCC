@@ -37,11 +37,11 @@ void manualTest() {
 
 	// Choose the algorithm
 	while (algorithm == -1) {
-		cout << " Which algorithm do you want to test?" << endl << endl
-			<< " 0) Go back" << endl
-			<< " 1) Tarjan" << endl
-			<< " 2) Nuutila" << endl
-			<< " 3) Pearce" << endl
+		cout << "Which algorithm do you want to test?" << endl << endl
+			<< "0) Go back" << endl
+			<< "1) Tarjan" << endl
+			<< "2) Nuutila" << endl
+			<< "3) Pearce" << endl
 			<< endl << " > ";
 
 		cin >> input;
@@ -57,18 +57,20 @@ void manualTest() {
 	}
 	
 	// Graph properties (size and number of edges)
-	cout << endl << " Insert <graph size> <number of edges>: ";
+	cout << endl << "Insert <graph size> <number of edges>: ";
 	cin >> graphSize >> edges;
-	if (graphSize < 0) graphSize = DEFAULT_SIZE;
-	if (edges < 0) edges = graphSize * DEFAULT_EDGE_FACTOR;
-
+	if (graphSize <= 0 || edges < 0) {
+		delete strategy;
+		return;
+	}
+	
 	// Get the edges as user input
 	Graph* g = new Graph(graphSize);
 	int source = -1;
 	int destination = -1;
 	cout << endl;
 	for (int i = 1; i <= edges; i++) {
-		cout << " " << i << "/" << edges << " Insert <source> <destination>: ";
+		cout << i << "/" << edges << "Insert <source> <destination>: ";
 		cin >> source >> destination;
 		if (source != destination && source >= 0) {
 			g->addEdge(source, destination);
@@ -76,11 +78,13 @@ void manualTest() {
 	}
 
 	// Run the test
-	cout << endl << " Run the test (y/n)? ";
+	cout << endl << "Run the test (y/n)? ";
 	cin >> input;
 	if (input[0] == 'y') {
 		cout << endl;
-		cout << " " << Tester(strategy).manualTest(g).toString() << endl;
+		auto l1 = strategy->getSCC(g);
+		cout << "Strongly connected components:" << endl << l1->toString() << endl;
+		cout << Tester(strategy).manualTest(g).toString() << endl;
 	}
 
 	delete g;
@@ -96,48 +100,52 @@ void menu() {
 	bool exit = false;
 	
 	do {
+		// Show the menu
 		cout << endl
-			<< " 0) Exit" << endl
-			<< " 1) Test Tarjan algorithm" << endl
-			<< " 2) Test Nuutila algorithm" << endl
-			<< " 3) Test Pearce algorithm" << endl
-			<< " 4) Test all algorithms" << endl
-			<< " 5) Manual test" << endl
-			<< " 6) Memory test" << endl
-			<< " 7) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
+			<< "0) Exit" << endl
+			<< "1) Test Tarjan algorithm" << endl
+			<< "2) Test Nuutila algorithm" << endl
+			<< "3) Test Pearce algorithm" << endl
+			<< "4) Test all algorithms" << endl
+			<< "5) Manual test" << endl
+			<< "6) Memory test" << endl
+			<< "7) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
 				<< endl
-			<< " 8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
-			<< " 9) What are 'test parameters' and 'graph properties'?" << endl
-			<< endl << " > ";
+			<< "8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
+			<< "9) What are 'test parameters' and 'graph properties'?" << endl
+			<< endl << "> ";
 
+
+		// User input
 		cin >> input;
 		code = parseInt(input[0], 0); // Parse the first character of the string
 		cout << endl;
+
 		switch (code) {
 			case 0: exit = true; break;
-			case 1: cout << " " << Tester(new SCCTarjan()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 2: cout << " " << Tester(new SCCNuutila()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 3: cout << " " << Tester(new SCCPearce()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 1: cout << Tester(new SCCTarjan()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step, factor).toString() << endl; break;
 			case 4: {
 				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step, factor);
-				cout << " Tarjan: " << resultTarjan.toString() << endl
-					<< " Nuutila: " << resultNuutila.toString() << endl
-					<< " Pearce: " << resultPearce.toString() << endl;
+				cout << "Tarjan: " << resultTarjan.toString() << endl
+					<< "Nuutila: " << resultNuutila.toString() << endl
+					<< "Pearce: " << resultPearce.toString() << endl;
 				break;
 			}
 			case 5: manualTest(); break;
 			case 6: Tester(new SCCPearce()).memoryTest(); break;
 			case 7: {
-				cout << " Insert <number of tests> <increment>: ";
+				cout << "Insert <number of tests> <increment>: ";
 				cin >> n >> step;
 				if (n < 0) n = DEFAULT_N_TESTS;
 				if (step < 0) step = DEFAULT_INCREMENT;
 				break;
 			}
 			case 8: {
-				cout << " Insert <size> <edge factor>: ";
+				cout << "Insert <size> <edge factor>: ";
 				cin >> minSize >> factor;
 				if (minSize < 0) minSize = DEFAULT_SIZE;
 				if (factor <= 0) factor = DEFAULT_EDGE_FACTOR;
@@ -153,7 +161,6 @@ int main(int argc, char* argv[]) {
 	// Inizialize seed for the random fuction
 	srand(time(NULL));
 
-	//manualTest();
 	menu();
 
 	return 0;

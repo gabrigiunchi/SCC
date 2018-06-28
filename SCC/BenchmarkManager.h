@@ -48,10 +48,5 @@ public:
 	*/
 	string getWinner();
 
-	/*
-		Elimintates all the results stored
-	*/
-	void clear();
-
 	string toString();
 };

@@ -65,10 +65,6 @@ double BenchmarkManager::getAveragePerformanceDifference() {
 	return min == max ? 0 : (1 - min / max) * 100;
 }
 
-void BenchmarkManager::clear() {
-	this->results.clear();
-}
-
 string BenchmarkManager::getWinner() {
 	double t1 = this->getAverageTime1();
 	double t2 = this->getAverageTime2();
