@@ -1,6 +1,7 @@
 #include "SCCBoost.h"
 #include <boost/graph/strong_components.hpp>
 #include "utils.h"
+#include "time.h"
 
 SCCBoost::SCCBoost() : SCCStrategy("Boost") { }
 

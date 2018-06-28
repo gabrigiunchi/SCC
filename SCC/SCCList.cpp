@@ -1,10 +1,6 @@
 #include "SCCList.h"
 #include <sstream>
-#include <unordered_set>
-#include <iostream>
 #include <boost/dynamic_bitset.hpp>
-
-using namespace std;
 
 SCCList::~SCCList() {
 	for (auto it = this->components->begin(); it != this->components->end(); ++it) {

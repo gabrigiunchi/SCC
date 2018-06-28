@@ -5,7 +5,6 @@
 #include "SCCTarjan.h"
 #include "SCCNuutila.h"
 #include "SCCPearce.h"
-#include "SCCBoost.h"
 #include "utils.h"
 
 #define DEFAULT_N_TESTS 10

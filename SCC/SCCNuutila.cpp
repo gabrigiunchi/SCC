@@ -1,4 +1,5 @@
 #include "SCCNuutila.h"
+#include "time.h"
 
 #define NIL -1
 

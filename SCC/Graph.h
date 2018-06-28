@@ -1,7 +1,6 @@
 #pragma once
 
 #include <boost/graph/adjacency_list.hpp>
-#include <boost/dynamic_bitset.hpp>
 #include <unordered_set>
 
 using namespace std;
