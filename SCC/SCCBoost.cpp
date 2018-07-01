@@ -1,18 +1,25 @@
 #include "SCCBoost.h"
 #include <boost/graph/strong_components.hpp>
 #include "utils.h"
-#include "time.h"
+#include <chrono>
 
 SCCBoost::SCCBoost() : SCCStrategy("Boost") { }
 
 SCCBoost::~SCCBoost() { }
 
 vector<int>* SCCBoost::util(graph_t* g, int size, int* nComponents, double* time) {
+	using namespace std::chrono;
+
 	vector<int>* scc = new vector<int>(size, 0);
 	graph_t temp = *g;
-	clock_t start = clock();
+
+	auto start = high_resolution_clock::now();
 	*nComponents = strong_components(temp, boost::make_iterator_property_map(scc->begin(), get(boost::vertex_index, temp), scc->at(0)));
-	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
+	auto end = high_resolution_clock::now();
+
+	duration<double> d = duration_cast<duration<double>>(end - start);
+	*time = d.count();
+
 	return scc;
 }
 

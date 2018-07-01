@@ -5,26 +5,19 @@
 #include "SCCTarjan.h"
 #include "SCCNuutila.h"
 #include "SCCPearce.h"
+#include "SCCPearceIterative.h"
+#include "SCCBoost.h"
 #include "utils.h"
 
 #define DEFAULT_N_TESTS 10
-#define DEFAULT_SIZE 100
-#define DEFAULT_EDGE_FACTOR 1
+#define DEFAULT_SIZE 1000
+#define DEFAULT_EDGE_FACTOR 10
 #define DEFAULT_INCREMENT 0
 
 using namespace std;
 
 void showInformation() {
 	
-}
-
-int parseInt(char digit, int defaultValue) {
-	// Handle invalid input
-	if (digit < '0' && digit > '9') {
-		return defaultValue;
-	}
-
-	return digit - '0';
 }
 
 void manualTest() {
@@ -44,7 +37,7 @@ void manualTest() {
 			<< endl << " > ";
 
 		cin >> input;
-		algorithm = parseInt(input[0], -1);
+		algorithm = stoi(input);
 
 		switch (algorithm) {
 			case 0: delete strategy; return;
@@ -79,7 +72,7 @@ void manualTest() {
 	// Run the test
 	cout << endl << "Run the test (y/n)? ";
 	cin >> input;
-	if (input[0] == 'y') {
+	if (input == "y") {
 		cout << endl;
 		auto l1 = strategy->getSCC(g);
 		cout << "Strongly connected components:" << endl << l1->toString() << endl;
@@ -117,7 +110,7 @@ void menu() {
 
 		// User input
 		cin >> input;
-		code = parseInt(input[0], 0); // Parse the first character of the string
+		code = stoi(input);
 		cout << endl;
 
 		switch (code) {

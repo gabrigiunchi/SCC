@@ -2,39 +2,35 @@
 
 SCCPearce::SCCPearce() :SCCStrategy("Pearce") { }
 
-void SCCPearce::visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent,
-	boost::dynamic_bitset<>* visited, SCCList* strongComponents) {
-
-	static int index = 0;
-	visited->set(v, true);
+void SCCPearce::visit(Graph* g, int v, int* index, int rindex[], stack<int>* stack, SCCList* strongComponents) {
 	bool root = true;
-	inComponent->set(v, false);
-	rindex[v] = index;
-	index++;
+	rindex[v] = *index;
+	(*index)++;
 	
 	auto children = g->getChildren(v);
 	for (auto it = children->begin(); it != children->end(); ++it) {
-		int w = *it;
-		if (!(*visited)[w]) {
-			this->visit(g, w, rindex, stack, inComponent, visited, strongComponents);
+		int c = *it;
+		if (rindex[c] == 0) {
+			visit(g, c, index, rindex, stack, strongComponents);
 		}
-
-		if (!(*inComponent)[w] && rindex[w] < rindex[v]) {
-			rindex[v] = rindex[w];
+		if (rindex[c] < rindex[v]) {
+			rindex[v] = rindex[c];
 			root = false;
 		}
+
 	}
 	delete children;
 
 	if (root) {
-		inComponent->set(v, true);
+		(*index)--;
 		StronglyConnectedComponent* component = new StronglyConnectedComponent();
 		while (!stack->empty() && rindex[v] <= rindex[stack->top()]) {
 			int w = stack->top();
 			stack->pop();
-			inComponent->set(w, true);
 			component->addNode(w);
+			(*index)--;
 		}
+
 		component->addNode(v);
 		strongComponents->addComponent(component);
 	}
@@ -48,29 +44,24 @@ SCCList* SCCPearce::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	int *rindex = new int[g->getSize()];
-	boost::dynamic_bitset<>* visited = new boost::dynamic_bitset<>(g->getSize());
-	boost::dynamic_bitset<>* inComponent = new boost::dynamic_bitset<>(g->getSize());
+	int index = 1;
+	int* rindex = new int[g->getSize()];
 	stack<int> *stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 
 	for (int i = 0; i < g->getSize(); i++) {
-		if (!(*visited)[i]) {
-			this->visit(g, i, rindex, stack, inComponent, visited, strongComponents);
+		rindex[i] = 0;
+	}
+
+	for (int i = 0; i < g->getSize(); i++) {
+		if (rindex[i] == 0) {
+			visit(g, i, &index, rindex, stack, strongComponents);
 		}
+		
 	}
 
 	delete rindex;
-	delete visited;
-	delete inComponent;
 	delete stack;
 
 	return strongComponents;
-}
-
-SCCList* SCCPearce::getSCC(Graph* g, double* time) {
-	clock_t start = clock();
-	SCCList* l = this->getSCC(g);
-	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
-	return l;
 }

@@ -6,57 +6,54 @@ SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 
 SCCTarjan::~SCCTarjan() { }
 
-void SCCTarjan::visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
+void SCCTarjan::visit(Graph* g, int v, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
 	
-	static int time = 0;
-
-	disc[parent] = time;
-	low[parent] = time;
-	time++;
-	stack->push(parent);
-	stackMember->set(parent, true);
+	disc[v] = *time;
+	low[v] = *time;
+	(*time)++;
+	stack->push(v);
+	stackMember->set(v, true);
 
 	// for each successor of the node
-	auto children = g->getChildren(parent);
+	auto children = g->getChildren(v);
 	for (auto i = children->begin(); i != children->end(); ++i) {
 		int child = *i;
 
 		// If the node hasn't been visited yet we continue the dfs
 		if (disc[child] == -1) {
-			visit(g, child, disc, low, stack, stackMember, strongComponents);
+			visit(g, child, time, disc, low, stack, stackMember, strongComponents);
 
 			// Call back from dfs (when it backtracks)
-			low[parent] = min(low[parent], low[child]);
+			low[v] = min(low[v], low[child]);
 		}
 
 		// If the current node is on the stack we update its low-link value
 		else if ((*stackMember)[child] == true) {
-			low[parent] = min(low[parent], disc[child]);
+			low[v] = min(low[v], disc[child]);
 		}
 	}
 	delete children;
 
-	int node = 0;
-
 	// If parent is the root node of our group then we have found a strong component
-	if (low[parent] == disc[parent]) {
+	if (low[v] == disc[v]) {
 		// Collect the node which are in the strong component
-		StronglyConnectedComponent* group = new StronglyConnectedComponent();
-		while (stack->top() != parent) {
-			node = stack->top();
-			group->addNode(node);
-			stackMember->set(node, false);
+		int w = 0;
+		StronglyConnectedComponent* component = new StronglyConnectedComponent();
+		while (stack->top() != v) {
+			w = stack->top();
+			component->addNode(w);
+			stackMember->set(w, false);
 			stack->pop();
 		}
-		node = stack->top();
-		group->addNode(node);
+		w = stack->top();
+		component->addNode(w);
 
-		stackMember->set(node, false);
+		stackMember->set(w, false);
 		stack->pop();
 
 		// Add the strong component just calculated to the list of strong components
-		strongComponents->addComponent(group);
+		strongComponents->addComponent(component);
 	}
 }
 
@@ -65,6 +62,7 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
+	int time = 0;
 	int *disc = new int[g->getSize()];
 	int *low = new int[g->getSize()];
 	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
@@ -80,7 +78,7 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			visit(g, i, disc, low, stack, stackMember, strongComponents);
+			visit(g, i, &time, disc, low, stack, stackMember, strongComponents);
 		}
 	}
 
@@ -91,11 +89,4 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 	delete stack;
 
 	return strongComponents;
-}
-
-SCCList* SCCTarjan::getSCC(Graph* g, double* time) {
-	clock_t start = clock();
-	SCCList* l = this->getSCC(g);
-	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
-	return l;
 }

@@ -1,17 +1,15 @@
 #include "SCCNuutila.h"
-#include "time.h"
 
 #define NIL -1
 
 SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 
-void SCCNuutila::visit(Graph* g, int parent, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
+void SCCNuutila::visit(Graph* g, int parent, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
-	static int time = 0;
 
-	disc[parent] = time;
-	low[parent] = time;
-	time++;
+	disc[parent] = *time;
+	low[parent] = *time;
+	(*time)++;
 	stackMember->set(parent, true);
 
 	// for each successor of the node
@@ -21,7 +19,7 @@ void SCCNuutila::visit(Graph* g, int parent, int disc[], int low[], stack<int> *
 
 		// If the node hasn't been visited yet we continue the dfs
 		if (disc[child] == NIL) {
-			visit(g, child, disc, low, stack, stackMember, strongComponents);
+			visit(g, child, time, disc, low, stack, stackMember, strongComponents);
 
 			// Call back from dfs (when it backtracks)
 			low[parent] = min(low[parent], low[child]);
@@ -61,6 +59,7 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
+	int time = 0;
 	int *disc = new int[g->getSize()];
 	int *low = new int[g->getSize()];
 	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
@@ -76,7 +75,7 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 	// For every node we call the utility function SCCUtil
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
-			visit(g, i, disc, low, stack, stackMember, strongComponents);
+			visit(g, i, &time, disc, low, stack, stackMember, strongComponents);
 		}
 	}
 
@@ -87,11 +86,4 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 	delete stack;
 
 	return strongComponents;
-}
-
-SCCList* SCCNuutila::getSCC(Graph* g, double* time) {
-	clock_t start = clock();
-	SCCList* l = this->getSCC(g);
-	*time = (clock() - start) / (double)CLOCKS_PER_SEC;
-	return l;
 }

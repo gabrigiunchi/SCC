@@ -8,11 +8,9 @@
 */
 class SCCPearce : public SCCStrategy {
 private:
-	void visit(Graph* g, int v, int rindex[], stack<int>* stack, boost::dynamic_bitset<>* inComponent, 
-		boost::dynamic_bitset<>* visited, SCCList* strongComponents);
+	void visit(Graph* g, int v, int* index, int rindex[], stack<int>* stack, SCCList* strongComponents);
 public:
 	SCCPearce();
 	SCCList* getSCC(Graph* g);
-	SCCList* getSCC(Graph* g, double* time);
 };
 
