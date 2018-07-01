@@ -18,7 +18,7 @@ private:
 	double time2;
 	
 public:
-	BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime);
+	BenchmarkResult(string algorithm, bool success, int graphSize, double t1, double t2);
 	string toString();
 	string getAlgorithm();
 	int getGraphSize();

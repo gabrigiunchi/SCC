@@ -12,5 +12,6 @@ private:
 public:
 	SCCPearce();
 	SCCList* getSCC(Graph* g);
+	SCCList* getSCC(Graph* g, double* time);
 };
 

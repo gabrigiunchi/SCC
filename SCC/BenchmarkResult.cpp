@@ -3,12 +3,12 @@
 #include "utils.h"
 #include "SCCStrategy.h"
 
-BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, double customTime, double boostTime) {
+BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, double t1, double t2) {
 	this->testAlgorithm = algorithm;
 	this->success = success;
 	this->graphSize = graphSize;
-	this->time1 = customTime;
-	this->time2 = boostTime;
+	this->time1 = t1;
+	this->time2 = t2;
 	SCCStrategy* s = getDefaultStrategy();
 	this->referenceAlgorithm = s->getName();
 	delete s;
@@ -35,8 +35,8 @@ double BenchmarkResult::getTime2() {
 }
 
 double BenchmarkResult::getPerformanceDifference() {
-	double min = this->time2 < this->time1 ? this->time2 : this->time1;
-	double max = this->time2 > this->time1 ? this->time2 : this->time1;
+	double min = std::min(this->time1, this->time2);
+	double max = std::max(this->time1, this->time2);
 
 	return min == max ? 0 : (1 - min / max) * 100;
 }

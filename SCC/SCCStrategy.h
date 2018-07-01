@@ -26,7 +26,7 @@ public:
 	/*
 		Calculate the strongly connected components of the given graph and measure the time took to perform the task
 	*/
-	SCCList* getSCC(Graph* g, double* time);
+	virtual SCCList* getSCC(Graph* g, double* time) = 0;
 
 	string getName();
 };

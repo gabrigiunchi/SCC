@@ -1,4 +1,5 @@
 #include "SCCNuutila.h"
+#include <chrono>
 
 #define NIL -1
 
@@ -86,4 +87,18 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 	delete stack;
 
 	return strongComponents;
+}
+
+
+SCCList* SCCNuutila::getSCC(Graph* g, double* time) {
+	using namespace std::chrono;
+
+	auto start = high_resolution_clock::now();
+	SCCList* l = this->getSCC(g);
+	auto end = high_resolution_clock::now();
+
+	duration<double> d = duration_cast<duration<double>>(end - start);
+	*time = d.count();
+
+	return l;
 }

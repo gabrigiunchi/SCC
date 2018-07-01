@@ -5,7 +5,6 @@
 #include "SCCTarjan.h"
 #include "SCCNuutila.h"
 #include "SCCPearce.h"
-#include "SCCPearceIterative.h"
 #include "SCCBoost.h"
 #include "utils.h"
 
