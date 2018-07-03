@@ -23,13 +23,13 @@ void Graph::addEdge(int source, int destination) {
 	add_edge(source, destination, this->graph);
 }
 
-std::unordered_set<int>* Graph::getChildren(int node) {
+std::vector<int>* Graph::getChildren(int node) {
 	graph_t::out_edge_iterator current, end;
-	std::unordered_set<int>* res = new std::unordered_set<int>();
+	std::vector<int>* res = new std::vector<int>();
 
 	for (tie(current, end) = out_edges(node, graph); current != end; ++current) {
 		auto target = boost::target(*current, graph);
-		res->insert(target);
+		res->push_back(target);
 	}
 
 	return res;

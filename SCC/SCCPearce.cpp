@@ -10,23 +10,25 @@ void SCCPearce::visit(Graph* g, int v, int* index, int rindex[], stack<int>* sta
 	
 	auto children = g->getChildren(v);
 	for (auto it = children->begin(); it != children->end(); ++it) {
-		int c = *it;
-		if (rindex[c] == 0) {
-			visit(g, c, index, rindex, stack, strongComponents);
+		int w = *it;
+		if (rindex[w] == 0) {
+			visit(g, w, index, rindex, stack, strongComponents);
 		}
-		if (rindex[c] < rindex[v]) {
-			rindex[v] = rindex[c];
+		if (rindex[w] < rindex[v]) {
+			rindex[v] = rindex[w];
 			root = false;
 		}
 
 	}
 	delete children;
 
+	// Found a strongly connected component
 	if (root) {
 		(*index)--;
 		StronglyConnectedComponent* component = new StronglyConnectedComponent();
+		int w = 0;
 		while (!stack->empty() && rindex[v] <= rindex[stack->top()]) {
-			int w = stack->top();
+			w = stack->top();
 			stack->pop();
 			component->addNode(w);
 			(*index)--;
@@ -46,7 +48,7 @@ SCCList* SCCPearce::getSCC(Graph* g) {
 	}
 
 	int index = 1;
-	int* rindex = new int[g->getSize()];
+	int* rindex = new int[g->getSize()]; // n words
 	stack<int> *stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 

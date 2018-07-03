@@ -1,7 +1,7 @@
 #pragma once
 
 #include <boost/graph/adjacency_list.hpp>
-#include <unordered_set>
+#include <vector>
 
 using namespace std;
 
@@ -25,7 +25,7 @@ public:
 	/*
 		Returns the adjacent vertices of a specific vertex
 	*/
-	std::unordered_set<int>* getChildren(int node);
+	std::vector<int>* getChildren(int node);
 
 	graph_t* getGraph();
 	int getSize();

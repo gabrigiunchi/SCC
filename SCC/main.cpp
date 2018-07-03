@@ -6,17 +6,25 @@
 #include "SCCNuutila.h"
 #include "SCCPearce.h"
 #include "SCCBoost.h"
+#include "SCCPearceIterative.h"
 #include "utils.h"
 
-#define DEFAULT_N_TESTS 10
-#define DEFAULT_SIZE 1000
-#define DEFAULT_EDGE_FACTOR 10
+#define DEFAULT_N_TESTS 5
+#define DEFAULT_SIZE 10000
+#define DEFAULT_EDGE_FACTOR 100
 #define DEFAULT_INCREMENT 0
 
 using namespace std;
 
 void showInformation() {
-	
+	cout << endl
+		<< "TEST PARAMETERS" << endl
+		<< "<number of tests>" << endl
+		<< "<increment> after each test the graph size is increased with this value"
+		<< endl << endl << "GRAPH PROPERTIES" << endl
+		<< "<graph size> number of vertices in the graph" << endl
+		<< "<edge factor> factor used to calculate how many edges are to be inserted in the graph (number_of_edges = graph_size * edge_factor)" 
+		<< endl;
 }
 
 void manualTest() {
@@ -33,6 +41,7 @@ void manualTest() {
 			<< "1) Tarjan" << endl
 			<< "2) Nuutila" << endl
 			<< "3) Pearce" << endl
+			<< "4) Iterative Pearce" << endl
 			<< endl << " > ";
 
 		cin >> input;
@@ -43,6 +52,7 @@ void manualTest() {
 			case 1: strategy = new SCCTarjan(); break;
 			case 2: strategy = new SCCNuutila(); break;
 			case 3: strategy = new SCCPearce(); break;
+			case 4: strategy = new SCCPearceIterative(); break;
 			default: algorithm = -1; break;
 		}
 	}
@@ -97,13 +107,14 @@ void menu() {
 			<< "1) Test Tarjan algorithm" << endl
 			<< "2) Test Nuutila algorithm" << endl
 			<< "3) Test Pearce algorithm" << endl
-			<< "4) Test all algorithms" << endl
-			<< "5) Manual test" << endl
-			<< "6) Memory test" << endl
-			<< "7) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
+			<< "4) Test Iterative Pearce algorithm" << endl
+			<< "5) Test all algorithms" << endl
+			<< "6) Manual test" << endl
+			<< "7) Memory test" << endl
+			<< "8) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
 				<< endl
-			<< "8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
-			<< "9) What are 'test parameters' and 'graph properties'?" << endl
+			<< "9) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
+			<< "10) What are 'test parameters' and 'graph properties'?" << endl
 			<< endl << "> ";
 
 
@@ -117,7 +128,8 @@ void menu() {
 			case 1: cout << Tester(new SCCTarjan()).performeTests(n, minSize, step, factor).toString() << endl; break;
 			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step, factor).toString() << endl; break;
 			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 4: {
+			case 4: cout << Tester(new SCCPearceIterative()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 5: {
 				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step, factor);
@@ -126,23 +138,23 @@ void menu() {
 					<< "Pearce: " << resultPearce.toString() << endl;
 				break;
 			}
-			case 5: manualTest(); break;
-			case 6: Tester(new SCCPearce()).memoryTest(); break;
-			case 7: {
+			case 6: manualTest(); break;
+			case 7: Tester(new SCCPearceIterative()).memoryTest(); break;
+			case 8: {
 				cout << "Insert <number of tests> <increment>: ";
 				cin >> n >> step;
 				if (n < 0) n = DEFAULT_N_TESTS;
 				if (step < 0) step = DEFAULT_INCREMENT;
 				break;
 			}
-			case 8: {
+			case 9: {
 				cout << "Insert <size> <edge factor>: ";
 				cin >> minSize >> factor;
 				if (minSize < 0) minSize = DEFAULT_SIZE;
 				if (factor <= 0) factor = DEFAULT_EDGE_FACTOR;
 				break;
 			}
-			case 9: showInformation(); break;
+			case 10: showInformation(); break;
 			default: break;
 		}
 	} while (!exit);
@@ -154,5 +166,6 @@ int main(int argc, char* argv[]) {
 
 	menu();
 
+	system("pause");
 	return 0;
 }

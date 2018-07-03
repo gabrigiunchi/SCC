@@ -21,7 +21,7 @@ public:
 	~Tester();
 
 	BenchmarkResult manualTest(Graph* g);
-	BenchmarkManager performeTests(int n, int minSize, int step, double edgeFactor);
+	BenchmarkManager performeTests(int n, int size, int step, double edgeFactor);
 	
 	/*
 		Runs thousands of tests to check if there are some memory leaks due to poor pointer management

@@ -76,14 +76,13 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 		low[i] = NIL;
 	}
 
-	// For every node we call the utility function SCCUtil
+	// For every node we call the recursive function visit
 	for (int i = 0; i < g->getSize(); i++) {
 		if (disc[i] == NIL) {
 			visit(g, i, &time, disc, low, stack, stackMember, strongComponents);
 		}
 	}
 
-	// frees the memory
 	delete disc;
 	delete low;
 	delete stackMember;

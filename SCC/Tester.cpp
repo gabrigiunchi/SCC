@@ -17,7 +17,7 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	double t2 = 0;
 	SCCList* l1 = this->strategy->getSCC(g, &t1);
 	SCCList* l2 = this->referenceStrategy->getSCC(g, &t2);
-
+	
 	bool success = l2->equals(l1);
 	BenchmarkResult result(this->strategy->getName(), success, g->getSize(), t1, t2);
 
@@ -26,10 +26,9 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	return result;
 }
 
-BenchmarkManager Tester::performeTests(int n, int minSize, int step, double factor) {
+BenchmarkManager Tester::performeTests(int n, int size, int step, double factor) {
 	BenchmarkManager benchmark(this->strategy->getName());
 
-	int size = minSize;
 	for (int i = 1; i <= n; i++) {
 		Graph* g = generateGraph(size, factor);
 		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
@@ -47,5 +46,9 @@ BenchmarkResult Tester::manualTest(Graph* g) {
 }
 
 void Tester::memoryTest() {
-	this->performeTests(10000, 100, 0, 1);
+	for (int i = 1; i <= 1000000; i++) {
+		Graph* g = generateGraph(100, 0);
+		delete this->strategy->getSCC(g);
+		delete g;
+	}
 }

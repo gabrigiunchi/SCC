@@ -126,6 +126,7 @@
     <ClCompile Include="SCCList.cpp" />
     <ClCompile Include="SCCNuutila.cpp" />
     <ClCompile Include="SCCPearce.cpp" />
+    <ClCompile Include="SCCPearceIterative.cpp" />
     <ClCompile Include="SCCStrategy.cpp" />
     <ClCompile Include="SCCTarjan.cpp" />
     <ClCompile Include="StronglyConnectedComponent.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="SCCList.h" />
     <ClInclude Include="SCCNuutila.h" />
     <ClInclude Include="SCCPearce.h" />
+    <ClInclude Include="SCCPearceIterative.h" />
     <ClInclude Include="SCCStrategy.h" />
     <ClInclude Include="SCCTarjan.h" />
     <ClInclude Include="StronglyConnectedComponent.h" />

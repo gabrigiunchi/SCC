@@ -5,53 +5,53 @@
 
 SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 
-void SCCNuutila::visit(Graph* g, int parent, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
+void SCCNuutila::visit(Graph* g, int v, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
 	SCCList* strongComponents) {
 
-	disc[parent] = *time;
-	low[parent] = *time;
+	disc[v] = *time;
+	low[v] = *time;
 	(*time)++;
-	stackMember->set(parent, true);
+	stackMember->set(v, true);
 
 	// for each successor of the node
-	auto children = g->getChildren(parent);
+	auto children = g->getChildren(v);
 	for (auto i = children->begin(); i != children->end(); ++i) {
-		int child = *i;
+		int w = *i;
 
 		// If the node hasn't been visited yet we continue the dfs
-		if (disc[child] == NIL) {
-			visit(g, child, time, disc, low, stack, stackMember, strongComponents);
+		if (disc[w] == NIL) {
+			visit(g, w, time, disc, low, stack, stackMember, strongComponents);
 
 			// Call back from dfs (when it backtracks)
-			low[parent] = min(low[parent], low[child]);
+			low[v] = min(low[v], low[w]);
 		}
 
 		// If the current node is on the stack we update its low-link value
-		else if ((*stackMember)[child] == true) {
-			low[parent] = min(low[parent], disc[child]);
+		else if ((*stackMember)[w] == true) {
+			low[v] = min(low[v], disc[w]);
 		}
 	}
 	delete children;
 
 	// If parent is the root node of our group then we have found a strong component
-	if (low[parent] == disc[parent]) {
+	if (low[v] == disc[v]) {
 		// Collect the node which are in the strong component
 		StronglyConnectedComponent* group = new StronglyConnectedComponent();
-		while (!stack->empty() && disc[stack->top()] > disc[parent]) {
+		while (!stack->empty() && disc[stack->top()] > disc[v]) {
 			int node = stack->top();
 			group->addNode(node);
 			stackMember->set(node, false);
 			stack->pop();
 		}
-		group->addNode(parent);
-		stackMember->set(parent, false);
+		group->addNode(v);
+		stackMember->set(v, false);
 
 		// Add the strong component just calculated to the list of strong components
 		strongComponents->addComponent(group);
 	}
 	else {
-		stack->push(parent);
-		stackMember->set(parent, true);
+		stack->push(v);
+		stackMember->set(v, true);
 	}
 }
 
@@ -61,9 +61,9 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 	}
 
 	int time = 0;
-	int *disc = new int[g->getSize()];
-	int *low = new int[g->getSize()];
-	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
+	int *disc = new int[g->getSize()]; // n words
+	int *low = new int[g->getSize()]; // n words
+	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize()); // n bits
 	stack<int> *stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 
@@ -73,14 +73,13 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 		low[i] = NIL;
 	}
 
-	// For every node we call the utility function SCCUtil
-	for (int i = 0; i < g->getSize(); i++) {
-		if (disc[i] == NIL) {
-			visit(g, i, &time, disc, low, stack, stackMember, strongComponents);
+	// For every node we call the recursive function visit
+	for (int v = 0; v < g->getSize(); v++) {
+		if (disc[v] == NIL) {
+			visit(g, v, &time, disc, low, stack, stackMember, strongComponents);
 		}
 	}
 
-	// frees the memory
 	delete disc;
 	delete low;
 	delete stackMember;
