@@ -110,11 +110,11 @@ void menu() {
 			<< "4) Test Iterative Pearce algorithm" << endl
 			<< "5) Test all algorithms" << endl
 			<< "6) Manual test" << endl
-			<< "7) Memory test" << endl
-			<< "8) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
+			<< "7) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
 				<< endl
-			<< "9) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
-			<< "10) What are 'test parameters' and 'graph properties'?" << endl
+			<< "8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
+			<< "9) What are 'test parameters' and 'graph properties'?" << endl
+			<< "10) Memory test (use with debugger)" << endl
 			<< endl << "> ";
 
 
@@ -139,22 +139,22 @@ void menu() {
 				break;
 			}
 			case 6: manualTest(); break;
-			case 7: Tester(new SCCPearceIterative()).memoryTest(); break;
-			case 8: {
+			case 7: {
 				cout << "Insert <number of tests> <increment>: ";
 				cin >> n >> step;
 				if (n < 0) n = DEFAULT_N_TESTS;
 				if (step < 0) step = DEFAULT_INCREMENT;
 				break;
 			}
-			case 9: {
+			case 8: {
 				cout << "Insert <size> <edge factor>: ";
 				cin >> minSize >> factor;
 				if (minSize < 0) minSize = DEFAULT_SIZE;
 				if (factor <= 0) factor = DEFAULT_EDGE_FACTOR;
 				break;
 			}
-			case 10: showInformation(); break;
+			case 9: showInformation(); break;
+			case 10: Tester(new SCCPearceIterative()).memoryTest(); break;
 			default: break;
 		}
 	} while (!exit);
@@ -166,6 +166,5 @@ int main(int argc, char* argv[]) {
 
 	menu();
 
-	system("pause");
 	return 0;
 }

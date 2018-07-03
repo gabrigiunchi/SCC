@@ -5,12 +5,11 @@
 
 class SCCPearceIterative : public SCCStrategy {
 private:
-	int c;
-	int* rindex;
 	int index;
-	boost::dynamic_bitset<>* root;
-	stack<int>* vS;
-	stack<int>* iS;
+	int* rindex; // n words
+	boost::dynamic_bitset<>* root; // n bits
+	stack<int>* vS; // n words
+	stack<int>* iS; // n words
 	stack<int>* S;
 
 	void visit(int v, Graph* g, SCCList* scc);

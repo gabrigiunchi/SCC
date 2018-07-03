@@ -23,6 +23,7 @@ void SCCPearceIterative::visitLoop(Graph* g, SCCList* scc) {
 	int i = iS->top();
 	auto children = g->getChildren(v);
 
+	// Traverse the vertex's children
 	while (i <= children->size()) {
 		if (i > 0) {
 			finishEdge(v, i - 1, children->at(i - 1));
@@ -33,10 +34,12 @@ void SCCPearceIterative::visitLoop(Graph* g, SCCList* scc) {
 		i++;
 	}
 	delete children;
+
 	finishVisiting(v, scc);
 }
 
 void SCCPearceIterative::beginVisiting(int v) {
+	// First time we visit the node
 	vS->push(v);
 	iS->push(0);
 	root->set(v, true);
@@ -48,6 +51,8 @@ void SCCPearceIterative::finishVisiting(int v, SCCList* scc) {
 	vS->pop();
 	iS->pop();
 	bool a = (*root)[v];
+
+	// Found a strongly connected component
 	if ((*root)[v] == true) {
 		index--;
 
@@ -57,12 +62,9 @@ void SCCPearceIterative::finishVisiting(int v, SCCList* scc) {
 		while (!S->empty() && rindex[v] <= rindex[S->top()]) {
 			w = S->top();
 			S->pop();
-			rindex[w] = c;
 			component->addNode(w);
 			index--;
 		}
-		rindex[v] = c;
-		c--;
 		component->addNode(v);
 		scc->addComponent(component);
 	}
@@ -94,13 +96,13 @@ void SCCPearceIterative::finishEdge(int v, int k, int w) {
 SCCList* SCCPearceIterative::getSCC(Graph* g) {
 	this->rindex = new int[g->getSize()];
 	this->index = 1;
-	this->c = g->getSize() - 1;
 	this->root = new boost::dynamic_bitset<>(g->getSize());
 	this->vS = new stack<int>();
 	this->iS = new stack<int>();
 	this->S = new stack<int>();
 	SCCList* scc = new SCCList();
 
+	// Initialize rindex
 	for (int i = 0; i < g->getSize(); i++) {
 		rindex[i] = 0;
 	}
