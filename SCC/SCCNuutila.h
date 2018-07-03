@@ -8,10 +8,16 @@
 */
 class SCCNuutila : public SCCStrategy {
 private:
-	void visit(Graph* g, int parent, int* index, int disc[], int low[], stack<int> *stack, 
-		boost::dynamic_bitset<>* stackMember, SCCList* strongComponents);
+	int time;
+	int* disc; // n words
+	int* low; // n words
+	boost::dynamic_bitset<>* stackMember; // n bits
+	stack<int>* stack; 
+	
+	void visit(int v, Graph* g, SCCList* strongComponents);
 public:
 	SCCNuutila();
+	~SCCNuutila();
 	SCCList* getSCC(Graph* g);
 	SCCList* getSCC(Graph* g, double* time);
 };

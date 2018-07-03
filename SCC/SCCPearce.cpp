@@ -3,16 +3,18 @@
 
 SCCPearce::SCCPearce() :SCCStrategy("Pearce") { }
 
-void SCCPearce::visit(Graph* g, int v, int* index, int rindex[], stack<int>* stack, SCCList* strongComponents) {
+SCCPearce::~SCCPearce() { }
+
+void SCCPearce::visit(int v, Graph* g, SCCList* strongComponents) {
 	bool root = true;
-	rindex[v] = *index;
-	(*index)++;
+	rindex[v] = index;
+	index++;
 	
 	auto children = g->getChildren(v);
 	for (auto it = children->begin(); it != children->end(); ++it) {
 		int w = *it;
 		if (rindex[w] == 0) {
-			visit(g, w, index, rindex, stack, strongComponents);
+			visit(w, g, strongComponents);
 		}
 		if (rindex[w] < rindex[v]) {
 			rindex[v] = rindex[w];
@@ -24,14 +26,14 @@ void SCCPearce::visit(Graph* g, int v, int* index, int rindex[], stack<int>* sta
 
 	// Found a strongly connected component
 	if (root) {
-		(*index)--;
+		index--;
 		StronglyConnectedComponent* component = new StronglyConnectedComponent();
 		int w = 0;
 		while (!stack->empty() && rindex[v] <= rindex[stack->top()]) {
 			w = stack->top();
 			stack->pop();
 			component->addNode(w);
-			(*index)--;
+			index--;
 		}
 
 		component->addNode(v);
@@ -47,24 +49,24 @@ SCCList* SCCPearce::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	int index = 1;
-	int* rindex = new int[g->getSize()]; // n words
-	stack<int> *stack = new std::stack<int>();
+	this->index = 1;
+	this->rindex = new int[g->getSize()]; // n words
+	this->stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 
 	for (int i = 0; i < g->getSize(); i++) {
 		rindex[i] = 0;
 	}
 
-	for (int i = 0; i < g->getSize(); i++) {
-		if (rindex[i] == 0) {
-			visit(g, i, &index, rindex, stack, strongComponents);
+	for (int v = 0; v < g->getSize(); v++) {
+		if (rindex[v] == 0) {
+			visit(v, g, strongComponents);
 		}
 		
 	}
 
-	delete rindex;
-	delete stack;
+	delete this->rindex;
+	delete this->stack;
 
 	return strongComponents;
 }

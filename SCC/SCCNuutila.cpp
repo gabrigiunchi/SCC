@@ -5,12 +5,13 @@
 
 SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 
-void SCCNuutila::visit(Graph* g, int v, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
-	SCCList* strongComponents) {
+SCCNuutila::~SCCNuutila() { }
 
-	disc[v] = *time;
-	low[v] = *time;
-	(*time)++;
+void SCCNuutila::visit(int v, Graph* g, SCCList* strongComponents) {
+
+	disc[v] = time;
+	low[v] = time;
+	time++;
 	stackMember->set(v, true);
 
 	// for each successor of the node
@@ -20,7 +21,7 @@ void SCCNuutila::visit(Graph* g, int v, int* time, int disc[], int low[], stack<
 
 		// If the node hasn't been visited yet we continue the dfs
 		if (disc[w] == NIL) {
-			visit(g, w, time, disc, low, stack, stackMember, strongComponents);
+			visit(w, g, strongComponents);
 
 			// Call back from dfs (when it backtracks)
 			low[v] = min(low[v], low[w]);
@@ -60,11 +61,11 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	int time = 0;
-	int *disc = new int[g->getSize()]; // n words
-	int *low = new int[g->getSize()]; // n words
-	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize()); // n bits
-	stack<int> *stack = new std::stack<int>();
+	this->time = 0;
+	this->disc = new int[g->getSize()]; // n words
+	this->low = new int[g->getSize()]; // n words
+	this->stackMember = new boost::dynamic_bitset<>(g->getSize()); // n bits
+	this->stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 
 	// Initialize disc and low (stackMember is already initialized)
@@ -76,14 +77,14 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 	// For every node we call the recursive function visit
 	for (int v = 0; v < g->getSize(); v++) {
 		if (disc[v] == NIL) {
-			visit(g, v, &time, disc, low, stack, stackMember, strongComponents);
+			visit(v, g, strongComponents);
 		}
 	}
 
-	delete disc;
-	delete low;
-	delete stackMember;
-	delete stack;
+	delete this->disc;
+	delete this->low;
+	delete this->stackMember;
+	delete this->stack;
 
 	return strongComponents;
 }

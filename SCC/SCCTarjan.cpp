@@ -7,31 +7,29 @@ SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 
 SCCTarjan::~SCCTarjan() { }
 
-void SCCTarjan::visit(Graph* g, int v, int* time, int disc[], int low[], stack<int> *stack, boost::dynamic_bitset<>* stackMember,
-	SCCList* strongComponents) {
-	
-	disc[v] = *time;
-	low[v] = *time;
-	(*time)++;
+void SCCTarjan::visit(int v, Graph* g, SCCList* strongComponents) {
+	disc[v] = time;
+	low[v] = time;
+	time++;
 	stack->push(v);
 	stackMember->set(v, true);
 
 	// for each successor of the node
 	auto children = g->getChildren(v);
 	for (auto i = children->begin(); i != children->end(); ++i) {
-		int child = *i;
+		int w = *i;
 
 		// If the node hasn't been visited yet we continue the dfs
-		if (disc[child] == -1) {
-			visit(g, child, time, disc, low, stack, stackMember, strongComponents);
+		if (disc[w] == -1) {
+			visit(w, g, strongComponents);
 
 			// Call back from dfs (when it backtracks)
-			low[v] = min(low[v], low[child]);
+			low[v] = min(low[v], low[w]);
 		}
 
 		// If the current node is on the stack we update its low-link value
-		else if ((*stackMember)[child] == true) {
-			low[v] = min(low[v], disc[child]);
+		else if ((*stackMember)[w] == true) {
+			low[v] = min(low[v], disc[w]);
 		}
 	}
 	delete children;
@@ -63,11 +61,11 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	int time = 0;
-	int *disc = new int[g->getSize()];
-	int *low = new int[g->getSize()];
-	boost::dynamic_bitset<> *stackMember = new boost::dynamic_bitset<>(g->getSize());
-	stack<int> *stack = new std::stack<int>();
+	this->time = 0;
+	this->disc = new int[g->getSize()];
+	this->low = new int[g->getSize()];
+	this->stackMember = new boost::dynamic_bitset<>(g->getSize());
+	this->stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 
 	// Initialize disc and low (stackMember is already initialized)
@@ -77,16 +75,16 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 	}
 
 	// For every node we call the recursive function visit
-	for (int i = 0; i < g->getSize(); i++) {
-		if (disc[i] == NIL) {
-			visit(g, i, &time, disc, low, stack, stackMember, strongComponents);
+	for (int v = 0; v < g->getSize(); v++) {
+		if (disc[v] == NIL) {
+			visit(v, g, strongComponents);
 		}
 	}
 
-	delete disc;
-	delete low;
-	delete stackMember;
-	delete stack;
+	delete this->disc;
+	delete this->low;
+	delete this->stackMember;
+	delete this->stack;
 
 	return strongComponents;
 }

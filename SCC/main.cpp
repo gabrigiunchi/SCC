@@ -10,8 +10,8 @@
 #include "utils.h"
 
 #define DEFAULT_N_TESTS 5
-#define DEFAULT_SIZE 10000
-#define DEFAULT_EDGE_FACTOR 100
+#define DEFAULT_SIZE 1000
+#define DEFAULT_EDGE_FACTOR 10
 #define DEFAULT_INCREMENT 0
 
 using namespace std;

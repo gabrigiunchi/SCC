@@ -8,9 +8,13 @@
 */
 class SCCPearce : public SCCStrategy {
 private:
-	void visit(Graph* g, int v, int* index, int rindex[], stack<int>* stack, SCCList* strongComponents);
+	int index;
+	int* rindex; // n words
+	stack<int>* stack;
+	void visit(int v, Graph* g, SCCList* strongComponents);
 public:
 	SCCPearce();
+	~SCCPearce();
 	SCCList* getSCC(Graph* g);
 	SCCList* getSCC(Graph* g, double* time);
 };

@@ -3,13 +3,7 @@
 
 SCCPearceIterative::SCCPearceIterative(): SCCStrategy("Pearce Iterative") { }
 
-SCCPearceIterative::~SCCPearceIterative() { 
-	delete this->root;
-	delete this->S;
-	delete this->rindex;
-	delete this->vS;
-	delete this->iS;
-}
+SCCPearceIterative::~SCCPearceIterative() { }
 
 void SCCPearceIterative::visit(int v, Graph* g, SCCList* scc) {
 	this->beginVisiting(v);
