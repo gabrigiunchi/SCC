@@ -24,7 +24,7 @@ void SCCPearce::visit(int v, Graph* g, SCCList* strongComponents) {
 	}
 	delete children;
 
-	// Found a strongly connected component
+	// Strongly connected component found
 	if (root) {
 		index--;
 		StronglyConnectedComponent* component = new StronglyConnectedComponent();
@@ -50,7 +50,7 @@ SCCList* SCCPearce::getSCC(Graph* g) {
 	}
 
 	this->index = 1;
-	this->rindex = new int[g->getSize()]; // n words
+	this->rindex = new int[g->getSize()];
 	this->stack = new std::stack<int>();
 	SCCList* strongComponents = new SCCList();
 

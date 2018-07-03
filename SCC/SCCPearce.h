@@ -10,7 +10,7 @@ class SCCPearce : public SCCStrategy {
 private:
 	int index;
 	int* rindex; // n words
-	stack<int>* stack;
+	stack<int>* stack; // n words in the worst case
 	void visit(int v, Graph* g, SCCList* strongComponents);
 public:
 	SCCPearce();

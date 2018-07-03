@@ -12,7 +12,7 @@ private:
 	int* disc; // n words
 	int* low; // n words
 	boost::dynamic_bitset<>* stackMember; // n bits
-	stack<int>* stack;
+	stack<int>* stack; // n words in the worst case
 	void visit(int v, Graph* g, SCCList* strongComponents);
 
 public:

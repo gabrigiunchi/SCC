@@ -4,7 +4,7 @@
 #include <boost/dynamic_bitset.hpp>
 
 /*
-	Class which implements the Nuutila's algorithm for finding strongly connected components in a directed graph
+	Class which implements the Nuutila's algorithm for finding strongly connected components in a directed graph.
 */
 class SCCNuutila : public SCCStrategy {
 private:

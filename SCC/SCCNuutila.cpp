@@ -8,7 +8,6 @@ SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 SCCNuutila::~SCCNuutila() { }
 
 void SCCNuutila::visit(int v, Graph* g, SCCList* strongComponents) {
-
 	disc[v] = time;
 	low[v] = time;
 	time++;

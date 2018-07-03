@@ -32,11 +32,10 @@ void manualTest() {
 	int graphSize = 0;
 	int edges = 0;
 	string input;
-	SCCStrategy* strategy = new SCCTarjan();
-
+	
 	// Choose the algorithm
-	while (algorithm == -1) {
-		cout << "Which algorithm do you want to test?" << endl << endl
+	while (algorithm < 0 || algorithm > 4) {
+		cout << endl << "Which algorithm do you want to test?" << endl << endl
 			<< "0) Go back" << endl
 			<< "1) Tarjan" << endl
 			<< "2) Nuutila" << endl
@@ -46,22 +45,16 @@ void manualTest() {
 
 		cin >> input;
 		algorithm = stoi(input);
+	}
 
-		switch (algorithm) {
-			case 0: delete strategy; return;
-			case 1: strategy = new SCCTarjan(); break;
-			case 2: strategy = new SCCNuutila(); break;
-			case 3: strategy = new SCCPearce(); break;
-			case 4: strategy = new SCCPearceIterative(); break;
-			default: algorithm = -1; break;
-		}
+	if (algorithm == 0) {
+		return;
 	}
 	
 	// Graph properties (size and number of edges)
 	cout << endl << "Insert <graph size> <number of edges>: ";
 	cin >> graphSize >> edges;
 	if (graphSize <= 0 || edges < 0) {
-		delete strategy;
 		return;
 	}
 	
@@ -71,7 +64,7 @@ void manualTest() {
 	int destination = -1;
 	cout << endl;
 	for (int i = 1; i <= edges; i++) {
-		cout << i << "/" << edges << "Insert <source> <destination>: ";
+		cout << i << "/" << edges << " Insert <source> <destination>: ";
 		cin >> source >> destination;
 		if (source != destination && source >= 0) {
 			g->addEdge(source, destination);
@@ -82,10 +75,19 @@ void manualTest() {
 	cout << endl << "Run the test (y/n)? ";
 	cin >> input;
 	if (input == "y") {
+		SCCStrategy* strategy;
+		switch (algorithm) {
+			case 1: strategy = new SCCTarjan(); break;
+			case 2: strategy = new SCCNuutila(); break;
+			case 3: strategy = new SCCPearce(); break;
+			case 4: strategy = new SCCPearceIterative(); break;
+			default: strategy = new SCCTarjan(); break;
+		}
 		cout << endl;
 		auto l1 = strategy->getSCC(g);
 		cout << "Strongly connected components:" << endl << l1->toString() << endl;
 		cout << Tester(strategy).manualTest(g).toString() << endl;
+		delete l1;
 	}
 
 	delete g;
