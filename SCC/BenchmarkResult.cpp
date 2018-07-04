@@ -14,6 +14,8 @@ BenchmarkResult::BenchmarkResult(string algorithm, bool success, int graphSize, 
 	delete s;
 }
 
+BenchmarkResult::~BenchmarkResult() { }
+
 string BenchmarkResult::getAlgorithm() {
 	return this->testAlgorithm;
 }

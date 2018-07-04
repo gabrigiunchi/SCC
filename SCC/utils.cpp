@@ -36,14 +36,14 @@ Graph* generateGraph(int size) {
 	return generateGraph(size, 1);
 }
 
-SCCList* convert(vector<int>* v, int nComponents) {
+SCCList* convert(vector<int> v, int nComponents) {
 	vector<StronglyConnectedComponent*>* groups = new vector<StronglyConnectedComponent*>();
 	for (int i = 0; i < nComponents; i++) {
 		groups->push_back(new StronglyConnectedComponent());
 	}
 
-	for (int current = 0; current < v->size(); current++) {
-		int component = v->at(current);
+	for (int current = 0; current < v.size(); current++) {
+		int component = v[current];
 		groups->at(component)->addNode(current);
 	}
 

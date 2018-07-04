@@ -10,6 +10,8 @@ BenchmarkManager::BenchmarkManager(string algorithm) {
 	delete s;
 }
 
+BenchmarkManager::~BenchmarkManager() { }
+
 void BenchmarkManager::addResult(BenchmarkResult result) {
 	this->results.push_back(result);
 }

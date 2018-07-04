@@ -7,8 +7,8 @@
 */
 class SCCBoost : public SCCStrategy {
 private:
-	vector<int>* util(graph_t* g, int size, int* nComponents, double* time);
-	vector<int>* util(graph_t* g, int size, int* nComponents);
+	vector<int> getSCC(Graph* g, int* nComponents);
+	vector<int> getSCC(Graph* g, int* nComponents, double* time);
 public:
 	SCCBoost();
 	~SCCBoost();

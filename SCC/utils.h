@@ -25,4 +25,4 @@ Graph* generateGraph(int size, double factor);
 /*
 	Takes as input the result of the boost's function for calculating SCCs and converts it into a istance of SCCList
 */
-SCCList* convert(vector<int>* v, int nComponents);
+SCCList* convert(vector<int> v, int nComponents);

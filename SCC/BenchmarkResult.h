@@ -19,6 +19,7 @@ private:
 	
 public:
 	BenchmarkResult(string algorithm, bool success, int graphSize, double t1, double t2);
+	~BenchmarkResult();
 	string toString();
 	string getAlgorithm();
 	int getGraphSize();

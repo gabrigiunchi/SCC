@@ -14,11 +14,11 @@ typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS> graph_
 */
 class Graph {
 private:
-	unsigned long size;
+	int size;
 	graph_t graph;
 
 public:
-	Graph(unsigned long size);
+	Graph(int size);
 	~Graph();
 	void addEdge(int source, int destination);
 
@@ -27,7 +27,7 @@ public:
 	*/
 	std::vector<int>* getChildren(int node);
 
-	graph_t* getGraph();
+	graph_t getGraph();
 	int getSize();
 	string toString();
 };

@@ -17,6 +17,7 @@ private:
 	
 public:
 	BenchmarkManager(string algorithm);
+	~BenchmarkManager();
 	void addResult(BenchmarkResult result);
 	double getSuccessRate();
 
