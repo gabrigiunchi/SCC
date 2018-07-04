@@ -8,7 +8,7 @@
 */
 class SCCNuutila : public SCCStrategy {
 private:
-	int time;
+	int index;
 	int* disc; // n words
 	int* low; // n words
 	boost::dynamic_bitset<>* stackMember; // n bits

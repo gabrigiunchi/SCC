@@ -8,9 +8,9 @@ SCCNuutila::SCCNuutila() :SCCStrategy("Nuutila") { }
 SCCNuutila::~SCCNuutila() { }
 
 void SCCNuutila::visit(int v, Graph* g, SCCList* strongComponents) {
-	disc[v] = time;
-	low[v] = time;
-	time++;
+	disc[v] = index;
+	low[v] = index;
+	index++;
 	stackMember->set(v, true);
 
 	// for each successor of the node
@@ -35,20 +35,22 @@ void SCCNuutila::visit(int v, Graph* g, SCCList* strongComponents) {
 
 	// If parent is the root node of our group then we have found a strong component
 	if (low[v] == disc[v]) {
-		// Collect the node which are in the strong component
 		StronglyConnectedComponent* group = new StronglyConnectedComponent();
+		int w = 0;
+
+		// The stack contains all the non-root of the scc
 		while (!stack->empty() && disc[stack->top()] > disc[v]) {
-			int node = stack->top();
-			group->addNode(node);
-			stackMember->set(node, false);
+			w = stack->top();
+			group->addNode(w);
+			stackMember->set(w, false);
 			stack->pop();
 		}
-		group->addNode(v);
+		group->addNode(v); // v was not on the stack because it is the root of the scc
 		stackMember->set(v, false);
 
-		// Add the strong component just calculated to the list of strong components
 		strongComponents->addComponent(group);
 	}
+	// Push the non-root node on the stack
 	else {
 		stack->push(v);
 		stackMember->set(v, true);
@@ -60,7 +62,7 @@ SCCList* SCCNuutila::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	this->time = 0;
+	this->index = 0;
 	this->disc = new int[g->getSize()]; // n words
 	this->low = new int[g->getSize()]; // n words
 	this->stackMember = new boost::dynamic_bitset<>(g->getSize()); // n bits

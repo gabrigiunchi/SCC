@@ -135,9 +135,11 @@ void menu() {
 				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
 				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step, factor);
+				BenchmarkManager resultIterativePearce = Tester(new SCCPearceIterative()).performeTests(n, minSize, step, factor);
 				cout << "Tarjan: " << resultTarjan.toString() << endl
 					<< "Nuutila: " << resultNuutila.toString() << endl
-					<< "Pearce: " << resultPearce.toString() << endl;
+					<< "Pearce: " << resultPearce.toString() << endl
+					<< "Iterative Pearce: " << resultIterativePearce.toString() << endl;
 				break;
 			}
 			case 6: manualTest(); break;

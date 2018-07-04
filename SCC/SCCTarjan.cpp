@@ -8,9 +8,9 @@ SCCTarjan::SCCTarjan() :SCCStrategy("Tarjan") { }
 SCCTarjan::~SCCTarjan() { }
 
 void SCCTarjan::visit(int v, Graph* g, SCCList* strongComponents) {
-	disc[v] = time;
-	low[v] = time;
-	time++;
+	disc[v] = index;
+	low[v] = index;
+	index++;
 	stack->push(v);
 	stackMember->set(v, true);
 
@@ -61,7 +61,7 @@ SCCList* SCCTarjan::getSCC(Graph* g) {
 		return new SCCList();
 	}
 
-	this->time = 0;
+	this->index = 0;
 	this->disc = new int[g->getSize()];
 	this->low = new int[g->getSize()];
 	this->stackMember = new boost::dynamic_bitset<>(g->getSize());
