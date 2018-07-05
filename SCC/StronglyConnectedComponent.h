@@ -9,13 +9,13 @@ using namespace std;
 */
 class StronglyConnectedComponent {
 private: 
-	set<int>* nodes;
+	set<int> nodes;
 
 public:
 	StronglyConnectedComponent();
 	~StronglyConnectedComponent();
 	void addNode(int node);
-	set<int>* getNodes();
+	set<int> getNodes();
 	bool equals(StronglyConnectedComponent* other);
 	string toString();
 	int size();

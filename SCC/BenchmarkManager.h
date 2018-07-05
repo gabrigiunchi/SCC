@@ -16,6 +16,7 @@ private:
 	list<BenchmarkResult> results;
 	
 public:
+	BenchmarkManager();
 	BenchmarkManager(string algorithm);
 	~BenchmarkManager();
 	void addResult(BenchmarkResult result);
