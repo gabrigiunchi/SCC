@@ -23,7 +23,7 @@ void Graph::addEdge(int source, int destination) {
 	add_edge(source, destination, this->graph);
 }
 
-std::vector<int>* Graph::getChildren(int node) {
+std::vector<int>* Graph::getNeighbours(int node) {
 	graph_t::out_edge_iterator current, end;
 	std::vector<int>* res = new std::vector<int>();
 
@@ -38,20 +38,20 @@ std::vector<int>* Graph::getChildren(int node) {
 string Graph::toString() {
 	stringstream s;
 	for (int i = 0; i < this->size; i++) {
-		auto children = this->getChildren(i);
+		auto neighbours = this->getNeighbours(i);
 		int k = 1;
 		
 		s << i << ": [";
-		for (auto it = children->begin(); it != children->end(); ++it) {
+		for (auto it = neighbours->begin(); it != neighbours->end(); ++it) {
 			s << *it;
-			if (k != children->size()) {
+			if (k != neighbours->size()) {
 				s << ", ";
 			}
 			k++;
 		}
 		s << "]" << std::endl;
 
-		delete children;
+		delete neighbours;
 	}
 
 	return s.str();

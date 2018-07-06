@@ -9,8 +9,8 @@ typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS> graph_
 
 /*
 	Decorator class for a directed graph implemented with the boost library.
-	The purpose of this class is to make easier the operations usually perfomed a graph
-	(add a vertex, get children of a vertex etc...)
+	The purpose of this class is to make easier the operations usually perfomed in a graph
+	(add a vertex, get neighbour of a vertex etc...)
 */
 class Graph {
 private:
@@ -25,7 +25,7 @@ public:
 	/*
 		Returns the adjacent vertices of a specific vertex
 	*/
-	std::vector<int>* getChildren(int node);
+	vector<int>* getNeighbours(int node);
 
 	graph_t getGraph();
 	int getSize();

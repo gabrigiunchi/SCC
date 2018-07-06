@@ -10,8 +10,8 @@
 #include "utils.h"
 
 #define DEFAULT_N_TESTS 5
-#define DEFAULT_SIZE 1000
-#define DEFAULT_EDGE_FACTOR 10
+#define DEFAULT_SIZE 10000
+#define DEFAULT_EDGE_FACTOR 100
 #define DEFAULT_INCREMENT 0
 
 using namespace std;
@@ -23,7 +23,7 @@ void showInformation() {
 		<< "<increment> after each test the graph size is increased with this value"
 		<< endl << endl << "GRAPH PROPERTIES" << endl
 		<< "<graph size> number of vertices in the graph" << endl
-		<< "<edge factor> factor used to calculate how many edges are to be inserted in the graph (number_of_edges = graph_size * edge_factor)" 
+		<< "<edge factor> number of edges per vertex (total_number_of_edges = graph_size * edge_factor)" 
 		<< endl;
 }
 
@@ -116,7 +116,6 @@ void menu() {
 				<< endl
 			<< "8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
 			<< "9) What are 'test parameters' and 'graph properties'?" << endl
-			<< "10) Memory test (use with debugger)" << endl
 			<< endl << "> ";
 
 
@@ -127,15 +126,15 @@ void menu() {
 
 		switch (code) {
 			case 0: exit = true; break;
-			case 1: cout << Tester(new SCCTarjan()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 2: cout << Tester(new SCCNuutila()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 3: cout << Tester(new SCCPearce()).performeTests(n, minSize, step, factor).toString() << endl; break;
-			case 4: cout << Tester(new SCCPearceIterative()).performeTests(n, minSize, step, factor).toString() << endl; break;
+			case 1: cout << Tester(new SCCTarjan()).randomTests(n, minSize, step, factor).toString() << endl; break;
+			case 2: cout << Tester(new SCCNuutila()).randomTests(n, minSize, step, factor).toString() << endl; break;
+			case 3: cout << Tester(new SCCPearce()).randomTests(n, minSize, step, factor).toString() << endl; break;
+			case 4: cout << Tester(new SCCPearceIterative()).randomTests(n, minSize, step, factor).toString() << endl; break;
 			case 5: {
-				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).performeTests(n, minSize, step, factor);
-				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).performeTests(n, minSize, step, factor);
-				BenchmarkManager resultPearce = Tester(new SCCPearce()).performeTests(n, minSize, step, factor);
-				BenchmarkManager resultIterativePearce = Tester(new SCCPearceIterative()).performeTests(n, minSize, step, factor);
+				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).randomTests(n, minSize, step, factor);
+				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).randomTests(n, minSize, step, factor);
+				BenchmarkManager resultPearce = Tester(new SCCPearce()).randomTests(n, minSize, step, factor);
+				BenchmarkManager resultIterativePearce = Tester(new SCCPearceIterative()).randomTests(n, minSize, step, factor);
 				cout << "Tarjan: " << resultTarjan.toString() << endl
 					<< "Nuutila: " << resultNuutila.toString() << endl
 					<< "Pearce: " << resultPearce.toString() << endl
@@ -158,7 +157,6 @@ void menu() {
 				break;
 			}
 			case 9: showInformation(); break;
-			case 10: Tester(new SCCPearceIterative()).memoryTest(); break;
 			default: break;
 		}
 	} while (!exit);
@@ -167,7 +165,7 @@ void menu() {
 int main(int argc, char* argv[]) {
 	// Inizialize seed for the random fuction
 	srand(time(NULL));
-
+	
 	menu();
 
 	return 0;

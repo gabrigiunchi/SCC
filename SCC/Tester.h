@@ -10,8 +10,8 @@
 class Tester {
 private:
 	SCCStrategy* strategy;
-	SCCStrategy* referenceStrategy; // the correct algorithm used as reference for the benchmark
-	BenchmarkResult checkAlgorithmCorrectness(Graph* g);
+	SCCStrategy* referenceStrategy; // the algorithm used as reference for the benchmark
+	BenchmarkResult checkCorrectness(Graph* g);
 
 public:
 	/*
@@ -20,12 +20,14 @@ public:
 	Tester(SCCStrategy* strategy);
 	~Tester();
 
-	BenchmarkResult manualTest(Graph* g);
-	BenchmarkManager performeTests(int n, int size, int step, double edgeFactor);
-	
 	/*
-		Runs thousands of tests to check if there are some memory leaks due to poor pointer management
+		Single test with the given graph. Prints the result and also the strongly connected components
 	*/
-	void memoryTest();
+	BenchmarkResult manualTest(Graph* g);
+
+	/*
+		Performs tests with random graphs
+	*/
+	BenchmarkManager randomTests(int n, int size, int step, double edgeFactor);
 };
 

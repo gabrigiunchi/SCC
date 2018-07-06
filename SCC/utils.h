@@ -10,6 +10,9 @@ using namespace std;
 */
 int random(int limit);
 
+/*
+	Round a number up to the given number of decimal places
+*/
 double round(double n, int precision);
 
 /*	

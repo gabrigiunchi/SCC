@@ -12,14 +12,13 @@ Tester::~Tester() {
 	delete this->referenceStrategy;
 }
 
-BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
+BenchmarkResult Tester::checkCorrectness(Graph* g) {
 	double t1 = 0;
 	double t2 = 0;
 	SCCList* l1 = this->strategy->getSCC(g, &t1);
 	SCCList* l2 = this->referenceStrategy->getSCC(g, &t2);
 	
-	//bool success = l2->equals(l1);
-	bool success = true;
+	bool success = l2->equals(l1);
 	BenchmarkResult result(this->strategy->getName(), success, g->getSize(), t1, t2);
 
 	delete l1;
@@ -27,12 +26,12 @@ BenchmarkResult Tester::checkAlgorithmCorrectness(Graph* g) {
 	return result;
 }
 
-BenchmarkManager Tester::performeTests(int n, int size, int step, double factor) {
+BenchmarkManager Tester::randomTests(int n, int size, int step, double factor) {
 	BenchmarkManager benchmark(this->strategy->getName());
 
 	for (int i = 1; i <= n; i++) {
 		Graph* g = generateGraph(size, factor);
-		BenchmarkResult result = this->checkAlgorithmCorrectness(g);
+		BenchmarkResult result = this->checkCorrectness(g);
 		cout << i << "/" << n << ": " << result.toString() << endl;
 		benchmark.addResult(result);
 		delete g;
@@ -43,13 +42,5 @@ BenchmarkManager Tester::performeTests(int n, int size, int step, double factor)
 }
 
 BenchmarkResult Tester::manualTest(Graph* g) {
-	return this->checkAlgorithmCorrectness(g);
-}
-
-void Tester::memoryTest() {
-	for (int i = 1; i <= 1000000; i++) {
-		Graph* g = generateGraph(100, 0);
-		delete this->strategy->getSCC(g);
-		delete g;
-	}
+	return this->checkCorrectness(g);
 }
