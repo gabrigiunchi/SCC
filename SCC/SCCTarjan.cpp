@@ -15,7 +15,7 @@ void SCCTarjan::visit(int v, Graph* g, SCCList* strongComponents) {
 	stackMember->set(v, true);
 
 	// for each successor of the node
-	auto children = g->getChildren(v);
+	auto children = g->getNeighbours(v);
 	for (auto i = children->begin(); i != children->end(); ++i) {
 		int w = *i;
 

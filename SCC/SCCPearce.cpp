@@ -10,7 +10,7 @@ void SCCPearce::visit(int v, Graph* g, SCCList* strongComponents) {
 	rindex[v] = index;
 	index++;
 	
-	auto children = g->getChildren(v);
+	auto children = g->getNeighbours(v);
 	for (auto it = children->begin(); it != children->end(); ++it) {
 		int w = *it;
 		if (rindex[w] == 0) {

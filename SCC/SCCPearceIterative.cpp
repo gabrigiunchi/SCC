@@ -15,7 +15,7 @@ void SCCPearceIterative::visit(int v, Graph* g, SCCList* scc) {
 void SCCPearceIterative::visitLoop(Graph* g, SCCList* scc) {
 	int v = vS->top();
 	int i = iS->top();
-	auto children = g->getChildren(v);
+	auto children = g->getNeighbours(v);
 
 	// Traverse the vertex's children
 	while (i <= children->size()) {
