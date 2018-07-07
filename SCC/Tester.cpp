@@ -26,11 +26,11 @@ BenchmarkResult Tester::checkCorrectness(Graph* g) {
 	return result;
 }
 
-BenchmarkManager Tester::randomTests(int n, int size, int step, double factor) {
+BenchmarkManager Tester::randomTests(int n, int size, int step, double density) {
 	BenchmarkManager benchmark(this->strategy->getName());
 
 	for (int i = 1; i <= n; i++) {
-		Graph* g = generateGraph(size, factor);
+		Graph* g = generateGraph(size, density);
 		BenchmarkResult result = this->checkCorrectness(g);
 		cout << i << "/" << n << ": " << result.toString() << endl;
 		benchmark.addResult(result);

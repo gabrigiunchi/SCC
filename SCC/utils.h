@@ -21,9 +21,9 @@ double round(double n, int precision);
 Graph* generateGraph(int size);
 
 /*
-	Generates a random graph with the given size and a factor for calculating the number of edges (size * factor)
+	Generates a random graph with the given size and density (edges per vertex)
 */
-Graph* generateGraph(int size, double factor);
+Graph* generateGraph(int size, double density);
 
 /*
 	Takes as input the result of the boost's function for calculating SCCs and converts it into a istance of SCCList

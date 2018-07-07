@@ -14,13 +14,13 @@ double round(double n, int precision) {
 	return round(n * temp) / temp;
 }
 
-Graph* generateGraph(int size, double factor) {
+Graph* generateGraph(int size, double density) {
 	if (size <= 0) {
 		return new Graph(0);
 	}
 
 	Graph* g = new Graph(size);
-	int nEdges = size * factor;
+	int nEdges = size * density;
 	for (int i = 0; i < nEdges; i++) {
 		int source = random(size);
 		int destination = random(size);

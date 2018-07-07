@@ -28,6 +28,6 @@ public:
 	/*
 		Performs tests with random graphs
 	*/
-	BenchmarkManager randomTests(int n, int size, int step, double edgeFactor);
+	BenchmarkManager randomTests(int n, int size, int step, double density);
 };
 

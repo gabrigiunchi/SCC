@@ -10,8 +10,8 @@
 #include "utils.h"
 
 #define DEFAULT_N_TESTS 5
-#define DEFAULT_SIZE 10000
-#define DEFAULT_EDGE_FACTOR 100
+#define DEFAULT_GRAPH_SIZE 1000
+#define DEFAULT_GRAPH_DENSITY 100
 #define DEFAULT_INCREMENT 0
 
 using namespace std;
@@ -23,14 +23,14 @@ void showInformation() {
 		<< "<increment> after each test the graph size is increased with this value"
 		<< endl << endl << "GRAPH PROPERTIES" << endl
 		<< "<graph size> number of vertices in the graph" << endl
-		<< "<edge factor> number of edges per vertex (total_number_of_edges = graph_size * edge_factor)" 
+		<< "<graph density> number of edges per vertex (total_number_of_edges = graph_size * edge_factor)" 
 		<< endl;
 }
 
 void manualTest() {
 	int algorithm = -1;
 	int graphSize = 0;
-	int edges = 0;
+	int graphDensity = 0;
 	string input;
 	
 	// Choose the algorithm
@@ -53,8 +53,8 @@ void manualTest() {
 	
 	// Graph properties (size and number of edges)
 	cout << endl << "Insert <graph size> <number of edges>: ";
-	cin >> graphSize >> edges;
-	if (graphSize <= 0 || edges < 0) {
+	cin >> graphSize >> graphDensity;
+	if (graphSize <= 0 || graphDensity < 0) {
 		return;
 	}
 	
@@ -63,8 +63,8 @@ void manualTest() {
 	int source = -1;
 	int destination = -1;
 	cout << endl;
-	for (int i = 1; i <= edges; i++) {
-		cout << i << "/" << edges << " Insert <source> <destination>: ";
+	for (int i = 1; i <= graphDensity; i++) {
+		cout << i << "/" << graphDensity << " Insert <source> <destination>: ";
 		cin >> source >> destination;
 		if (source != destination && source >= 0) {
 			g->addEdge(source, destination);
@@ -95,10 +95,10 @@ void manualTest() {
 
 void menu() {
 	int code = 0;
-	int minSize = DEFAULT_SIZE;
+	int minSize = DEFAULT_GRAPH_SIZE;
 	int step = DEFAULT_INCREMENT;
 	int n = DEFAULT_N_TESTS;
-	double factor = DEFAULT_EDGE_FACTOR;
+	double graphDensity = DEFAULT_GRAPH_DENSITY;
 	string input;
 	bool exit = false;
 	
@@ -114,7 +114,7 @@ void menu() {
 			<< "6) Manual test" << endl
 			<< "7) Set test parameters (current: number of tests=" << n << ", step=" << step << ")"
 				<< endl
-			<< "8) Set graph properties (current: size=" << minSize << ", edge factor=" << factor << ")" << endl
+			<< "8) Set graph properties (current: size=" << minSize << ", density=" << graphDensity << ")" << endl
 			<< "9) What are 'test parameters' and 'graph properties'?" << endl
 			<< endl << "> ";
 
@@ -126,15 +126,15 @@ void menu() {
 
 		switch (code) {
 			case 0: exit = true; break;
-			case 1: cout << Tester(new SCCTarjan()).randomTests(n, minSize, step, factor).toString() << endl; break;
-			case 2: cout << Tester(new SCCNuutila()).randomTests(n, minSize, step, factor).toString() << endl; break;
-			case 3: cout << Tester(new SCCPearce()).randomTests(n, minSize, step, factor).toString() << endl; break;
-			case 4: cout << Tester(new SCCPearceIterative()).randomTests(n, minSize, step, factor).toString() << endl; break;
+			case 1: cout << Tester(new SCCTarjan()).randomTests(n, minSize, step, graphDensity).toString() << endl; break;
+			case 2: cout << Tester(new SCCNuutila()).randomTests(n, minSize, step, graphDensity).toString() << endl; break;
+			case 3: cout << Tester(new SCCPearce()).randomTests(n, minSize, step, graphDensity).toString() << endl; break;
+			case 4: cout << Tester(new SCCPearceIterative()).randomTests(n, minSize, step, graphDensity).toString() << endl; break;
 			case 5: {
-				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).randomTests(n, minSize, step, factor);
-				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).randomTests(n, minSize, step, factor);
-				BenchmarkManager resultPearce = Tester(new SCCPearce()).randomTests(n, minSize, step, factor);
-				BenchmarkManager resultIterativePearce = Tester(new SCCPearceIterative()).randomTests(n, minSize, step, factor);
+				BenchmarkManager resultTarjan = Tester(new SCCTarjan()).randomTests(n, minSize, step, graphDensity);
+				BenchmarkManager resultNuutila = Tester(new SCCNuutila()).randomTests(n, minSize, step, graphDensity);
+				BenchmarkManager resultPearce = Tester(new SCCPearce()).randomTests(n, minSize, step, graphDensity);
+				BenchmarkManager resultIterativePearce = Tester(new SCCPearceIterative()).randomTests(n, minSize, step, graphDensity);
 				cout << "Tarjan: " << resultTarjan.toString() << endl
 					<< "Nuutila: " << resultNuutila.toString() << endl
 					<< "Pearce: " << resultPearce.toString() << endl
@@ -150,10 +150,10 @@ void menu() {
 				break;
 			}
 			case 8: {
-				cout << "Insert <size> <edge factor>: ";
-				cin >> minSize >> factor;
-				if (minSize < 0) minSize = DEFAULT_SIZE;
-				if (factor <= 0) factor = DEFAULT_EDGE_FACTOR;
+				cout << "Insert <size> <density>: ";
+				cin >> minSize >> graphDensity;
+				if (minSize < 0) minSize = DEFAULT_GRAPH_SIZE;
+				if (graphDensity < 0) graphDensity = DEFAULT_GRAPH_DENSITY;
 				break;
 			}
 			case 9: showInformation(); break;
